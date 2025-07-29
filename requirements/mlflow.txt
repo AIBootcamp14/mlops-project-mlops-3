@@ -1,0 +1,3 @@
+-r base.txt
+mlflow==2.12.1
+gunicorn==22.0.0 

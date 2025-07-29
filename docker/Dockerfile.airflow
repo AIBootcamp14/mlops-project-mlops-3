@@ -10,7 +10,5 @@ RUN apt-get update && apt-get install -y --no-install-recommends build-essential
 COPY movie-mlops-project/dags/ /opt/airflow/dags
 
 USER airflow
-RUN pip install --no-cache-dir \
-    boto3==1.34.113 \
-    requests==2.32.3 \
-    pandas==2.2.2 
+COPY requirements/base.txt requirements/airflow.txt /tmp/req/
+RUN pip install --no-cache-dir -r /tmp/req/airflow.txt 

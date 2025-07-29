@@ -13,8 +13,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends build-essential
 WORKDIR /app
 
 # Install Python dependencies first for better layer caching
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements/base.txt requirements/api.txt ./
+RUN pip install --no-cache-dir -r api.txt
 
 # Copy application code
 COPY movie-mlops-project/serving/ /app/serving

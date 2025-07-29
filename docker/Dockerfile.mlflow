@@ -2,7 +2,8 @@ FROM python:3.11-slim
 
 WORKDIR /mlflow
 
-RUN pip install --no-cache-dir mlflow==2.12.1 boto3 gunicorn
+COPY requirements/base.txt requirements/mlflow.txt ./
+RUN pip install --no-cache-dir -r mlflow.txt
 
 EXPOSE 5000
 
