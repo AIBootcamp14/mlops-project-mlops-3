@@ -1,0 +1,16 @@
+FROM apache/airflow:2.9.0-python3.11
+
+USER root
+
+# Install any additional packages & Python libraries required by the DAGs
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy DAGs into Airflow DAG directory
+COPY movie-mlops-project/dags/ /opt/airflow/dags
+
+USER airflow
+RUN pip install --no-cache-dir \
+    boto3==1.34.113 \
+    requests==2.32.3 \
+    pandas==2.2.2 
