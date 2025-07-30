@@ -21,7 +21,7 @@ async def root():
     }
 
 
-@app.get
+@app.get("/health")
 async def health_check():
     """
     헬스체크 엔드포인트
