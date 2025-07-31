@@ -1,8 +1,8 @@
 # 모델링 관련 
 
 data:
-  # 전처리된 데이터가 저장된 디렉토리 (preprocessing에 저장된다고 가정)
-  processed_data_dir: "preprocessing"
+  # 전처리된 데이터가 저장된 디렉토리 (result에 저장)
+  processed_data_dir: "result"
   train_data_file: "tmdb_train.csv"
   test_data_file: "tmdb_test.csv"
   feature_names_file: "feature_names.json"
