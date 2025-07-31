@@ -103,7 +103,7 @@ if __name__ == "__main__":
         feature_names_file = get_config_value(config_path, 'data.feature_names_file')
         target_column = get_config_value(config_path, 'model.target_column')
         
-        base_xgb_params = get_config_value(config_path, 'model_params.xgb_params')
+        base_xgb_params = get_config_value(config_path, 'model.xgboost_params')
         
         mlflow_tracking_uri = get_config_value(config_path, 'mlflow.tracking_uri')
         mlflow_experiment_name = get_config_value(config_path, 'mlflow.experiment_name')
