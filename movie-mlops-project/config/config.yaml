@@ -24,3 +24,4 @@ model:
 mlflow:
   tracking_uri: "http://localhost:5000" 
   model_registry_name: "MovieRatingXGBoostModel" 
+  experiment_name: "Movie-Rating-Prediction"
