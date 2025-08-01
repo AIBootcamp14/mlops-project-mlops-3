@@ -243,10 +243,14 @@ class TMDBDataPreprocessor:
         # 범주형 특성 인코딩
         categorical_features = X.select_dtypes(include=['object', 'category']).columns.tolist()
         
+        # 인코딩된 특성을 별도의 DataFrame으로 생성
+        encoded_features = {}
         for col in categorical_features:
             if col not in self.label_encoders:
                 self.label_encoders[col] = LabelEncoder()
-            X[f"{col}_encoded"] = self.label_encoders[col].fit_transform(X[col].astype(str))
+            encoded_features[f"{col}_encoded"] = self.label_encoders[col].fit_transform(X[col].astype(str))
+        
+        X_categorical_encoded_df = pd.DataFrame(encoded_features, index=X.index)
         
         # 최종 특성 결합
         final_features = []
@@ -266,7 +270,7 @@ class TMDBDataPreprocessor:
         X_final = pd.concat([
             X[original_numeric],
             X_numeric_scaled_df,
-            X[[f"{col}_encoded" for col in categorical_features]]
+            X_categorical_encoded_df
         ], axis=1)
         
         # 타겟 변수 추가
