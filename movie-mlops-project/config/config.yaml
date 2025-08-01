@@ -2,7 +2,7 @@
 
 data:
   # 전처리된 데이터가 저장된 디렉토리 (result에 저장)
-  processed_data_dir: "result"
+  processed_data_dir: "preprocessing/result"
   train_data_file: "tmdb_train.csv"
   test_data_file: "tmdb_test.csv"
   feature_names_file: "feature_names.json"
