@@ -35,7 +35,9 @@ services:
       dockerfile: docker/Dockerfile.mlflow
     container_name: mlflow
     ports:
-      - "5000:5000"
+
+      - "5001:5000"
+
     networks:
       - backend
 
