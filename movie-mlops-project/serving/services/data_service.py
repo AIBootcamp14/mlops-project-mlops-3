@@ -170,6 +170,85 @@ class DataService:
                 'file_path': self.csv_path,
                 'file_size': None
             }
+       
+            
+    def load_data(self):
+        """
+        CSV 데이터를 pandas DataFrame으로 로드
+        
+        Returns:
+            dict: 로드 결과 {'success': bool, 'message': str, 'data_loaded': bool, ...}
+        """
+        # 파일 존재 확인
+        file_check = self.check_file_exists()
+        if not file_check['exists']:
+            return {
+                'success': False,
+                'message': f"파일 없음: {file_check['message']}",
+                'data_loaded': False,
+                'shape': None
+            }
+        
+        try:
+            # CSV 파일 로드
+            logger.info(f"📊 CSV 데이터 로딩 시작...")
+            logger.info(f"   📁 파일: {file_check['file_path']}")
+            logger.info(f"   📦 크기: {file_check['file_size']:,} bytes")
+            
+            # pandas로 CSV 읽기 (핵심!)
+            self.data = pd.read_csv(file_check['file_path'])
+            
+            # 기본 정보 수집
+            self.data_shape = self.data.shape                    # (행수, 열수)
+            self.data_columns = list(self.data.columns)          # 컬럼명 목록
+            self.is_data_loaded = True                           # 로드 완료 플래그
+            
+            # 데이터 품질 확인
+            null_counts = self.data.isnull().sum().sum()         # 전체 결측치 개수
+            duplicate_counts = self.data.duplicated().sum()      # 중복 행 개수
+            
+            # 메타정보 저장
+            self.data_info = {
+                'shape': self.data_shape,
+                'columns': self.data_columns,
+                'null_count': null_counts,
+                'duplicate_count': duplicate_counts,
+                'dtypes': self.data.dtypes.to_dict()             # 각 컬럼의 데이터 타입
+            }
+            
+            # 성공 로그
+            logger.info("✅ CSV 데이터 로드 완료!")
+            logger.info(f"   📊 데이터 크기: {self.data_shape[0]:,} rows × {self.data_shape[1]} columns")
+            logger.info(f"   🏷️ 컬럼 수: {len(self.data_columns)}")
+            logger.info(f"   🔍 결측치: {null_counts:,}개")
+            logger.info(f"   🔍 중복 행: {duplicate_counts:,}개")
+            
+            return {
+                'success': True,
+                'message': 'CSV 데이터 로드가 성공적으로 완료되었습니다.',
+                'data_loaded': True,
+                'shape': self.data_shape,
+                'columns_count': len(self.data_columns),
+                'null_count': null_counts,
+                'duplicate_count': duplicate_counts
+            }
+            
+        except Exception as e:
+            # 실패 처리
+            logger.error(f"❌ CSV 데이터 로드 실패: {e}")
+            
+            # 상태 초기화
+            self.data = None
+            self.is_data_loaded = False
+            self.data_shape = None
+            self.data_columns = None
+            
+            return {
+                'success': False,
+                'message': f'CSV 데이터 로드 실패: {str(e)}',
+                'data_loaded': False,
+                'shape': None
+            }
             
             
 # =============================================================================
@@ -204,12 +283,106 @@ def test_basic_functionality():
     
     if result['exists']:
         print("🎉 기본 테스트 성공!")
+        return True  # ✅ 수정: return True 추가
     else:
         print("⚠️ CSV 파일을 확인해주세요.")
+        return False # ✅ 수정: return False 추가
 
-# =============================================================================
-# 이 파일을 직접 실행할 때만 테스트 실행
-# =============================================================================
+def test_data_loading():
+    """🧪 2차 테스트: CSV 데이터 로딩"""
+    print("🧪 2차 테스트: CSV 데이터 로딩")
+    print("=" * 40)
+    
+    # 1. 서비스 생성 및 데이터 로드
+    service = DataService()
+    result = service.load_data()
+    
+    # 2. 결과 출력
+    print(f"📊 로딩 결과: {result['success']}")
+    print(f"메시지: {result['message']}")
+    
+    if result['success']:
+        print(f"📏 데이터 크기: {result['shape'][0]:,} × {result['shape'][1]}")
+        print(f"🏷️ 컬럼 수: {result['columns_count']}")
+        print(f"🕳️ 결측치: {result['null_count']}")
+        print(f"🔄 중복 행: {result['duplicate_count']}")
+        
+        # 3. 샘플 데이터 미리보기
+        print(f"\n👀 첫 5개 컬럼: {service.data_columns[:5]}")
+        print(f"📊 데이터 미리보기:")
+        print(service.data.iloc[:3, :5].to_string())
+        
+        print(f"\n🎉 2차 테스트 성공!")
+        return True
+    else:
+        print(f"❌ 2차 테스트 실패!")
+        return False
+
+def test_complete():
+    """🧪 전체 테스트: 1차 + 2차"""
+    print("🚀 DataService 전체 테스트")
+    print("=" * 50)
+    
+    # 1차 테스트
+    print("1️⃣ 파일 존재 확인...")
+    step1 = test_basic_functionality()
+    
+    if step1:  # 이제 step1이 제대로 True/False 값을 가집니다
+        print("\n2️⃣ 데이터 로딩...")
+        step2 = test_data_loading()
+        
+        if step2:
+            print(f"\n🏆 전체 테스트 성공!")
+            print(f"✅ 파일 확인: 완료")
+            print(f"✅ 데이터 로딩: 완료")
+            print(f"🎯 2단계 완료! 다음: 3단계 - 예측 서비스")
+            return True
+    
+    print(f"⚠️ 테스트 실패")
+    return False
+
+# ✅ 수정: debug_file_paths() 함수 추가 (간단 버전)
+def debug_file_paths():
+    """🔍 파일 경로 디버깅 함수 (간단 버전)"""
+    print("🔍 파일 경로 디버깅")
+    print("=" * 50)
+    
+    current_dir = os.getcwd()
+    print(f"📍 현재 디렉토리: {current_dir}")
+    
+    # 현재 설정된 경로 확인
+    service = DataService()
+    print(f"📁 설정된 CSV 경로: {service.csv_path}")
+    
+    abs_path = os.path.abspath(service.csv_path)
+    exists = os.path.exists(abs_path)
+    
+    print(f"📄 절대 경로: {abs_path}")
+    print(f"📊 파일 존재: {'✅ 예' if exists else '❌ 아니오'}")
+    
+    if exists:
+        size = os.path.getsize(abs_path)
+        print(f"📦 파일 크기: {size:,} bytes")
+
+# 실행 부분 업데이트
 if __name__ == "__main__":
-    # 기본 테스트 실행
-    test_basic_functionality()
+    import sys
+    
+    if len(sys.argv) > 1:
+        if sys.argv[1] == "1":
+            test_basic_functionality()
+        elif sys.argv[1] == "2": 
+            test_data_loading()
+        elif sys.argv[1] == "test":
+            test_complete()
+        elif sys.argv[1] == "debug":
+            debug_file_paths()  # 이제 함수가 정의되어 있음
+        else:
+            print("사용법:")
+            print("  python data_service.py        # 2차 테스트")
+            print("  python data_service.py 1      # 1차 테스트")
+            print("  python data_service.py 2      # 2차 테스트")
+            print("  python data_service.py test   # 전체 테스트")
+            print("  python data_service.py debug  # 경로 디버깅")
+    else:
+        test_data_loading()
