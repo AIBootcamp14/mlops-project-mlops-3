@@ -1,38 +1,83 @@
-import subprocess
-import datetime
+from airflow import DAG
+from airflow.operators.python import PythonOperator
+from airflow.utils.dates import days_ago
 import os
-import sys
+import logging
+import subprocess
 
-LOG_DIR = "logs"
-os.makedirs(LOG_DIR, exist_ok=True)
-log_file = os.path.join(LOG_DIR, f"pipeline_log_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.txt")
+default_args = {
+    'owner': 'airflow',
+    'start_date': days_ago(1),
+    'retries': 1,
+}
 
-def run_step(step_name, command):
-    with open(log_file, "a", encoding="utf-8") as log:
-        log.write(f"\n[STEP] {step_name} 시작 - {datetime.datetime.now()}\n")
-        log.flush()
-        try:
-            subprocess.run(command, check=True, stdout=log, stderr=log, text=True)
-            log.write(f"[STEP] {step_name} 완료 ✅\n")
-        except subprocess.CalledProcessError as e:
-            log.write(f"[ERROR] {step_name} 실패 ❌\n{str(e)}\n")
-            print(f"❌ {step_name} 단계에서 오류 발생. 로그를 확인하세요.")
-            sys.exit(1)
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
-def main():
-    print("🚀 자동화 파이프라인 시작")
+dag = DAG(
+    'movie_pipeline_all_scripts',
+    default_args=default_args,
+    schedule_interval=None,
+    catchup=False,
+    max_active_runs=1,
+    description='7개 스크립트를 순차 실행하는 영화 평점 예측 파이프라인',
+)
 
-    # 1. 크롤링 (crawler.py가 standalone으로 실행 가능해야 함)
-    run_step("크롤링", ["python", "crawler.py"])
+def run_script(script_name):
+    script_path = os.path.join(project_root, script_name)
+    if not os.path.exists(script_path):
+        raise FileNotFoundError(f"{script_path} 가 존재하지 않습니다.")
 
-    # 2. 전처리 (preprocessing.py를 모듈로 import하지 않고 별도 실행한다면 여기에 추가)
-    run_step("전처리", ["python", "preprocessing.py"])
+    logging.info(f"{script_name} 실행 시작")
+    result = subprocess.run(
+        ['python3', script_path],
+        cwd=project_root,
+        capture_output=True,
+        text=True,
+    )
 
-    # 3. main.py 실행 (전체 파이프라인 또는 추가 작업)
-    run_step("main 실행", ["python", "main.py"])
+    logging.info(f"{script_name} stdout:\n{result.stdout}")
+    if result.returncode != 0:
+        logging.error(f"{script_name} 실행 실패 stderr:\n{result.stderr}")
+        raise RuntimeError(f"{script_name} 실행 중 오류 발생, 반환 코드: {result.returncode}")
+    logging.info(f"{script_name} 실행 완료")
 
-    print("✅ 자동화 파이프라인 완료!")
-    print(f"📜 로그 위치: {log_file}")
+crawl_task = PythonOperator(
+    task_id='run_crawler',
+    python_callable=lambda: run_script('crawler.py'),
+    dag=dag,
+)
 
-if __name__ == "__main__":
-    main()
+preprocess_task = PythonOperator(
+    task_id='run_preprocessing',
+    python_callable=lambda: run_script('preprocessing.py'),
+    dag=dag,
+)
+
+train_task = PythonOperator(
+    task_id='run_train',
+    python_callable=lambda: run_script('train.py'),
+    dag=dag,
+)
+
+evaluate_task = PythonOperator(
+    task_id='run_evaluate',
+    python_callable=lambda: run_script('evaluate.py'),
+    dag=dag,
+)
+
+register_task = PythonOperator(
+    task_id='run_register_mlflow',
+    python_callable=lambda: run_script('register_mlflow.py'),
+    dag=dag,
+)
+
+main_task = PythonOperator(
+    task_id='run_main',
+    python_callable=lambda: run_script('main.py'),
+    dag=dag,
+)
+
+# utils.py는 라이브러리 역할이므로 실행 작업 필요 없음
+
+# 실행 순서 지정
+crawl_task >> preprocess_task >> train_task >> evaluate_task >> register_task >> main_task
