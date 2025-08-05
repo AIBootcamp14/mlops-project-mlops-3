@@ -1,46 +1,60 @@
 services:
-  api:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile.api
-    container_name: movie_api
-    ports:
-      - "8000:8000"
-    environment:
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-      - AWS_DEFAULT_REGION=ap-northeast-2
-    depends_on:
-      - mlflow
-    networks:
-      - backend
+  # api:
+  #   build:
+  #     context: .
+  #     dockerfile: docker/Dockerfile.api
+  #   container_name: movie_api
+  #   ports:
+  #     - "8000:8000"
+  #   environment:
+  #     - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+  #     - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+  #     - AWS_DEFAULT_REGION=ap-northeast-2
+  #   depends_on:
+  #     - mlflow
+  #   networks:
+  #     - backend
 
-  airflow:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile.airflow
-    container_name: airflow
-    environment:
-      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
-    volumes:
-      - ./dags:/opt/airflow/dags
-    ports:
-      - "8080:8080"
-    networks:
-      - backend
+  # airflow:
+  #   build:
+  #     context: .
+  #     dockerfile: docker/Dockerfile.airflow
+  #   container_name: airflow
+  #   environment:
+  #     - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+  #   volumes:
+  #     - ./dags:/opt/airflow/dags
+  #   ports:
+  #     - "8080:8080"
+  #   networks:
+  #     - backend
 
+   
+  
   mlflow:
     build:
       context: .
       dockerfile: docker/Dockerfile.mlflow
     container_name: mlflow
     ports:
-
       - "5001:5000"
-
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_DEFAULT_REGION=ap-northeast-2
+      - MLFLOW_S3_ENDPOINT_URL=https://s3.ap-northeast-2.amazonaws.com
+    command: >
+      mlflow server
+      --backend-store-uri sqlite:///mlflow.db
+      --default-artifact-root s3://mlopsproject-3/models
+      --host 0.0.0.0
+      --port 5000
     networks:
       - backend
 
 networks:
   backend:
-    driver: bridge 
+    driver: bridge
+
+
+
