@@ -29,10 +29,14 @@ class DataService:
         
         # === 1. CSV 파일 경로 설정 ===
         if csv_path is None:
-            # 기본 경로: serving 폴더에서 실행할 때 상위 폴더의 전처리 결과
-            self.csv_path = "./preprocessing/result/tmdb_test.csv"
+            # 현재 파일(data_service.py)의 위치를 기준으로 계산
+            current_dir = os.path.dirname(os.path.abspath(__file__))  # services/
+            serving_dir = os.path.dirname(current_dir)                # serving/
+            project_dir = os.path.dirname(serving_dir)                # movie-mlops-project/
+        
+            # CSV 파일 절대 경로 계산
+            self.csv_path = os.path.join(project_dir, "preprocessing", "result", "tmdb_test.csv")
         else:
-            # 사용자가 직접 경로를 지정한 경우
             self.csv_path = csv_path
         
         # === 2. 데이터 상태를 추적하는 변수들 ===
