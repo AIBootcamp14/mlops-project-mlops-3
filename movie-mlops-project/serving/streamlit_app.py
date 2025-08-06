@@ -21,7 +21,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# 개선된 스타일링 (텍스트 가시성 문제 해결)
+# 최소한의 스타일링만 적용
 st.markdown("""
 <style>
     .main-header {
@@ -31,62 +31,10 @@ st.markdown("""
         margin-bottom: 2rem;
         font-weight: bold;
     }
-    .metric-card {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 1rem;
-        border-radius: 10px;
-        color: white;
-        text-align: center;
-        margin: 0.5rem 0;
-    }
-    .status-good {
-        color: #28a745;
-        font-weight: bold;
-    }
-    .status-bad {
-        color: #dc3545;
-        font-weight: bold;
-    }
-    .movie-card {
-        border: 2px solid #007bff;
-        border-radius: 15px;
-        padding: 1.5rem;
-        margin: 1rem 0;
-        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        color: #333333 !important;
-    }
-    .movie-card h4 {
-        color: #007bff !important;
-        margin-bottom: 1rem;
-        font-size: 1.3rem;
-    }
-    .movie-card p {
-        color: #495057 !important;
-        margin: 0.5rem 0;
-        font-size: 1rem;
-    }
-    .movie-card strong {
-        color: #212529 !important;
-    }
-    .movie-title {
-        color: #dc3545 !important;
-        font-weight: bold;
-        font-size: 1.1rem;
-    }
-    .poster-img {
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
+    .status-good { color: #28a745; font-weight: bold; }
+    .status-bad { color: #dc3545; font-weight: bold; }
 </style>
 """, unsafe_allow_html=True)
-
-# 환경변수 로드
-import os
-from dotenv import load_dotenv
-
-# .env 파일 로드
-load_dotenv()
 
 # API 설정
 API_BASE_URL = "http://localhost:8000"
@@ -110,11 +58,13 @@ def get_api_data(endpoint, params=None):
     except Exception as e:
         return {"error": str(e)}, False
 
-@st.cache_data(ttl=3600)  # 1시간 캐시 (영화 정보는 자주 안 바뀜)
+@st.cache_data(ttl=3600)  # 1시간 캐시
 def get_movie_details(movie_id):
     """TMDB API에서 영화 상세 정보 가져오기"""
+    if not TMDB_API_KEY:
+        return None
+        
     try:
-        # .env 파일의 TMDB_BASE_URL이 "/movie" 포함하므로 조건부 처리
         base_url = TMDB_BASE_URL
         if base_url.endswith('/movie'):
             url = f"{base_url}/{movie_id}"
@@ -140,7 +90,6 @@ def get_movie_details(movie_id):
         else:
             return None
     except Exception as e:
-        st.error(f"TMDB API 오류: {e}")
         return None
 
 def get_poster_url(poster_path):
@@ -148,6 +97,65 @@ def get_poster_url(poster_path):
     if poster_path:
         return f"{TMDB_IMAGE_URL}{poster_path}"
     return None
+
+def display_simple_movie_card(movie, movie_details=None):
+    """간단하고 깔끔한 영화 카드 표시"""
+    # 기본 정보 추출
+    rank = movie.get('rank', 0)
+    movie_id = movie.get('movie_id', 0)
+    predicted_rating = movie.get('predicted_rating', 0.0)
+    
+    # TMDB 정보 처리
+    if movie_details:
+        title = movie_details.get('title', f'영화 ID {movie_id}')
+        original_title = movie_details.get('original_title', '')
+        release_date = movie_details.get('release_date', '')
+        genres = movie_details.get('genres', [])
+        poster_url = get_poster_url(movie_details.get('poster_path'))
+    else:
+        title = f'영화 ID {movie_id}'
+        original_title = ''
+        release_date = ''
+        genres = []
+        poster_url = None
+
+    # 스트림릿 expander 사용 (깔끔한 카드 효과)
+    with st.expander(f"🏅 {rank}위 | ⭐ {predicted_rating:.2f}", expanded=True):
+        # 메인 정보와 포스터를 나란히
+        col1, col2 = st.columns([3, 1])
+        
+        with col1:
+            # 영화 제목
+            display_title = title[:30] + "..." if len(title) > 30 else title
+            st.subheader(display_title)
+            
+            # 원제목 (다른 경우에만)
+            if original_title and original_title != title:
+                st.caption(f"*{original_title[:35]}*")
+            
+            # 기본 정보
+            st.write(f"**영화 ID:** {movie_id}")
+            st.write(f"**🎯 예측평점:** {predicted_rating:.2f}")
+            
+            # 추가 정보 (있는 경우)
+            if release_date:
+                release_year = release_date[:4] if len(release_date) >= 4 else release_date
+                st.write(f"**개봉:** {release_year}")
+            
+            if genres:
+                genres_str = ', '.join(genres[:3])  # 최대 3개 장르
+                st.write(f"**장르:** {genres_str}")
+        
+        with col2:
+            # 포스터 이미지 (130px로 복원)
+            if poster_url:
+                try:
+                    st.image(poster_url, width=130)
+                except:
+                    st.write("🎬 포스터 로드 실패")
+            else:
+                st.write("🎬")
+                st.write("포스터 없음")
 
 def show_api_status():
     """API 연결 상태 표시"""
@@ -180,48 +188,6 @@ def show_api_status():
         st.sidebar.info("영화 제목과 포스터를 보려면 .env 파일에 TMDB_API_KEY를 설정하세요.")
     
     return success
-
-def create_enhanced_movie_card(movie, movie_details=None):
-    """개선된 영화 카드 HTML 생성"""
-    # 기본 정보
-    rank = movie['rank']
-    movie_id = movie['movie_id']
-    predicted_rating = movie['predicted_rating']
-    
-    # TMDB 정보 (있는 경우)
-    if movie_details:
-        title = movie_details['title']
-        original_title = movie_details['original_title']
-        poster_url = get_poster_url(movie_details['poster_path'])
-        release_date = movie_details['release_date'][:4] if movie_details['release_date'] else ''
-        genres = ', '.join(movie_details['genres'][:2]) if movie_details['genres'] else ''  # 최대 2개 장르
-    else:
-        title = f"영화 ID {movie_id}"
-        original_title = ""
-        poster_url = None
-        release_date = ""
-        genres = ""
-    
-    # 포스터 이미지 HTML
-    poster_html = ""
-    if poster_url:
-        poster_html = f'<img src="{poster_url}" class="poster-img" width="80" style="float: right; margin-left: 15px;">'
-    
-    # 카드 HTML
-    card_html = f"""
-    <div class="movie-card">
-        {poster_html}
-        <h4>🏅 {rank}위</h4>
-        <p class="movie-title">{title}</p>
-        {f'<p style="font-size: 0.9rem; color: #6c757d !important;"><em>{original_title}</em></p>' if original_title and original_title != title else ''}
-        <p><strong>영화 ID:</strong> {movie_id}</p>
-        <p><strong>예측 평점:</strong> ⭐ {predicted_rating:.2f}</p>
-        {f'<p><strong>개봉년도:</strong> {release_date}</p>' if release_date else ''}
-        {f'<p><strong>장르:</strong> {genres}</p>' if genres else ''}
-        <div style="clear: both;"></div>
-    </div>
-    """
-    return card_html
 
 def main():
     # 메인 헤더
@@ -262,7 +228,7 @@ def main():
     tab1, tab2, tab3, tab4 = st.tabs(["📊 대시보드", "🏆 TOP 영화", "📈 통계 분석", "📋 전체 데이터"])
     
     # ========================================
-    # 탭 1: 대시보드 (기존 코드 유지)
+    # 탭 1: 대시보드
     # ========================================
     with tab1:
         st.header("📊 예측 대시보드")
@@ -279,14 +245,14 @@ def main():
             with col1:
                 st.metric("총 영화 수", f"{stats['total_movies']:,}개")
             with col2:
-                st.metric("평균 평점", f"{stats['average_rating']:.2f}")
+                st.metric("평균 예측평점", f"{stats['average_rating']:.2f}")
             with col3:
-                st.metric("최고 평점", f"{stats['max_rating']:.2f}")
+                st.metric("최고 예측평점", f"{stats['max_rating']:.2f}")
             with col4:
-                st.metric("최저 평점", f"{stats['min_rating']:.2f}")
+                st.metric("최저 예측평점", f"{stats['min_rating']:.2f}")
             
-            # 평점 분포 차트
-            st.subheader("🎯 평점 구간별 분포")
+            # 예측평점 분포 차트
+            st.subheader("🎯 예측평점 구간별 분포")
             
             dist_df = pd.DataFrame(list(distribution.items()), columns=['구간', '영화수'])
             
@@ -294,7 +260,7 @@ def main():
                 dist_df, 
                 x='구간', 
                 y='영화수',
-                title="평점 구간별 영화 분포",
+                title="예측평점 구간별 영화 분포",
                 color='영화수',
                 color_continuous_scale='viridis'
             )
@@ -304,10 +270,10 @@ def main():
             st.error("통계 데이터를 불러올 수 없습니다.")
     
     # ========================================
-    # 탭 2: TOP 영화 (개선된 버전)
+    # 탭 2: TOP 영화 (간단한 카드 스타일)
     # ========================================
     with tab2:
-        st.header("🏆 예측 평점 TOP 영화")
+        st.header("🏆 예측평점 상위 영화")
         
         # 상위 영화 개수 선택
         top_count = st.selectbox("표시할 영화 개수", [5, 10, 20, 30], index=1)
@@ -327,8 +293,8 @@ def main():
                 df_top, 
                 x='rank', 
                 y='predicted_rating',
-                title=f"🎬 예측 평점 TOP {top_count}",
-                labels={'predicted_rating': '예측 평점', 'rank': '순위'},
+                title=f"🎬 예측평점 상위 {top_count}개 영화",
+                labels={'predicted_rating': '예측평점', 'rank': '순위'},
                 color='predicted_rating',
                 color_continuous_scale='plasma',
                 text='predicted_rating'
@@ -337,42 +303,34 @@ def main():
             fig_top.update_layout(height=500)
             st.plotly_chart(fig_top, use_container_width=True)
             
-            # 개선된 영화 카드 섹션
+            # 영화 카드 섹션
             st.subheader("🎬 상위 영화 상세 정보")
             
-            if enable_tmdb and TMDB_API_KEY:
-                # TMDB 정보와 함께 표시
-                for movie in movies[:top_count]:
-                    with st.spinner(f"영화 정보 로딩 중... (ID: {movie['movie_id']})"):
-                        movie_details = get_movie_details(movie['movie_id'])
-                    
-                    card_html = create_enhanced_movie_card(movie, movie_details)
-                    st.markdown(card_html, unsafe_allow_html=True)
-                    
-                    # 구분선
-                    if movie['rank'] < top_count:
-                        st.markdown("---")
-            else:
-                # 기본 정보만 표시
-                if not enable_tmdb:
-                    st.info("💡 TMDB 영화 정보를 보려면 사이드바에서 '🎬 TMDB 영화 정보 표시'를 체크하세요.")
-                else:
-                    st.warning("⚠️ TMDB API 키가 설정되지 않아 기본 정보만 표시됩니다.")
-                
-                # 3열로 기본 카드 표시
-                for i in range(0, len(movies), 3):
-                    cols = st.columns(3)
-                    for j, col in enumerate(cols):
-                        if i + j < len(movies):
-                            movie = movies[i + j]
-                            with col:
-                                card_html = create_enhanced_movie_card(movie)
-                                st.markdown(card_html, unsafe_allow_html=True)
+            # 한 줄에 2개씩 표시 (더 깔끔하게)
+            for i in range(0, len(movies[:top_count]), 2):
+                cols = st.columns(2)
+                for j, col in enumerate(cols):
+                    if i + j < len(movies[:top_count]):
+                        movie = movies[i + j]
+                        with col:
+                            # TMDB 정보 가져오기
+                            movie_details = None
+                            if enable_tmdb and TMDB_API_KEY:
+                                movie_details = get_movie_details(movie['movie_id'])
+                            
+                            # 간단한 카드 표시
+                            display_simple_movie_card(movie, movie_details)
+            
+            # 정보 메시지
+            if not enable_tmdb:
+                st.info("💡 TMDB 영화 정보를 보려면 사이드바에서 '🎬 TMDB 영화 정보 표시'를 체크하세요.")
+            elif not TMDB_API_KEY:
+                st.warning("⚠️ TMDB API 키가 설정되지 않아 기본 정보만 표시됩니다.")
         else:
             st.error("상위 영화 데이터를 불러올 수 없습니다.")
     
     # ========================================
-    # 탭 3: 통계 분석 (기존 기능 완성)
+    # 탭 3: 통계 분석
     # ========================================
     with tab3:
         st.header("📈 통계 분석")
@@ -387,27 +345,27 @@ def main():
             st.success(f"✅ {len(df_all)}개 영화 데이터 로드 완료!")
             
             # 히스토그램
-            st.subheader("📊 예측 평점 분포 히스토그램")
+            st.subheader("📊 예측평점 분포 히스토그램")
             
             fig_hist = px.histogram(
                 df_all, 
                 x='predicted_rating',
                 nbins=20,
-                title="예측 평점 분포",
-                labels={'predicted_rating': '예측 평점', 'count': '영화 수'},
+                title="예측평점 분포",
+                labels={'predicted_rating': '예측평점', 'count': '영화 수'},
                 color_discrete_sequence=['#FF6B6B']
             )
             fig_hist.update_layout(height=400)
             st.plotly_chart(fig_hist, use_container_width=True)
             
             # 박스플롯
-            st.subheader("📦 예측 평점 박스플롯")
+            st.subheader("📦 예측평점 박스플롯")
             
             fig_box = px.box(
                 df_all, 
                 y='predicted_rating',
-                title="예측 평점 분포 (박스플롯)",
-                labels={'predicted_rating': '예측 평점'}
+                title="예측평점 분포 (박스플롯)",
+                labels={'predicted_rating': '예측평점'}
             )
             fig_box.update_layout(height=400)
             st.plotly_chart(fig_box, use_container_width=True)
@@ -423,22 +381,15 @@ def main():
             with col2:
                 st.subheader("🎯 분위수 정보")
                 quantiles = df_all['predicted_rating'].quantile([0.1, 0.25, 0.5, 0.75, 0.9])
-                st.write("**분위수별 평점:**")
+                st.write("**분위수별 예측평점:**")
                 for q, value in quantiles.items():
                     st.write(f"• {q*100:.0f}%: {value:.2f}")
                     
         else:
             st.error("예측 데이터를 불러올 수 없습니다.")
     
-    # 하단 정보
-    st.markdown("---")
-    st.markdown("**💡 정보**: 이 대시보드는 MLflow + XGBoost 모델을 사용하여 TMDB 영화 데이터의 평점을 예측합니다.")
-    if TMDB_API_KEY:
-        st.markdown("**🎬 TMDB API**: 영화 제목, 포스터, 장르 정보 연동 중")
-    st.markdown(f"**🕒 마지막 업데이트**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    
     # ========================================
-    # 탭 4: 전체 데이터 (기존 기능 완성)
+    # 탭 4: 전체 데이터
     # ========================================
     with tab4:
         st.header("📋 전체 예측 데이터")
@@ -454,12 +405,12 @@ def main():
             
             col1, col2 = st.columns(2)
             with col1:
-                min_rating = st.slider("최소 평점", 
+                min_rating = st.slider("최소 예측평점", 
                                      float(df_all['predicted_rating'].min()), 
                                      float(df_all['predicted_rating'].max()), 
                                      float(df_all['predicted_rating'].min()))
             with col2:
-                max_rating = st.slider("최대 평점", 
+                max_rating = st.slider("최대 예측평점", 
                                      float(df_all['predicted_rating'].min()), 
                                      float(df_all['predicted_rating'].max()), 
                                      float(df_all['predicted_rating'].max()))
@@ -477,11 +428,11 @@ def main():
             
             # 정렬 옵션
             sort_option = st.selectbox("정렬 기준", 
-                                     ["예측 평점 (높음→낮음)", "예측 평점 (낮음→높음)", "영화 ID"])
+                                     ["예측평점 (높음→낮음)", "예측평점 (낮음→높음)", "영화 ID"])
             
-            if sort_option == "예측 평점 (높음→낮음)":
+            if sort_option == "예측평점 (높음→낮음)":
                 filtered_df = filtered_df.sort_values('predicted_rating', ascending=False)
-            elif sort_option == "예측 평점 (낮음→높음)":
+            elif sort_option == "예측평점 (낮음→높음)":
                 filtered_df = filtered_df.sort_values('predicted_rating', ascending=True)
             else:
                 filtered_df = filtered_df.sort_values('movie_id')
@@ -490,11 +441,11 @@ def main():
             filtered_df_display = filtered_df.copy()
             filtered_df_display['순위'] = range(1, len(filtered_df_display) + 1)
             filtered_df_display['영화 ID'] = filtered_df_display['movie_id']
-            filtered_df_display['예측 평점'] = filtered_df_display['predicted_rating'].round(2)
+            filtered_df_display['예측평점'] = filtered_df_display['predicted_rating'].round(2)
             
             # 테이블 표시
             st.dataframe(
-                filtered_df_display[['순위', '영화 ID', '예측 평점']],
+                filtered_df_display[['순위', '영화 ID', '예측평점']],
                 use_container_width=True,
                 hide_index=True
             )
@@ -510,6 +461,13 @@ def main():
             
         else:
             st.error("예측 데이터를 불러올 수 없습니다.")
+    
+    # 하단 정보
+    st.markdown("---")
+    st.markdown("**💡 정보**: 이 대시보드는 MLflow + XGBoost 모델을 사용하여 TMDB 영화 데이터의 평점을 예측합니다.")
+    if TMDB_API_KEY:
+        st.markdown("**🎬 TMDB API**: 영화 제목, 포스터, 장르 정보 연동 중")
+    st.markdown(f"**🕒 마지막 업데이트**: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
 if __name__ == "__main__":
     main()
