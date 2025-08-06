@@ -328,7 +328,7 @@ class TMDBDataPreprocessor:
         
         return df
     
-    def run_full_pipeline(self, json_file_path, target_column='vote_average'):
+    def run_full_pipeline(self, json_file_path, target_column='vote_average', split_data=True):
         """전체 전처리 파이프라인 실행"""
         print("🎬 TMDB 영화 평점 예측 데이터 전처리 시작")
         print("=" * 50)
@@ -349,37 +349,60 @@ class TMDBDataPreprocessor:
         # 최종 요약
         df = self.get_preprocessing_summary(df)
         
-        # 학습/테스트 분할
-        X_train, X_test, y_train, y_test = self.step6_train_test_split(df, target_column)
-        
-        print("\n✅ 전처리 완료!")
-        
-        return {
-            'processed_df': df,
-            'X_train': X_train,
-            'X_test': X_test, 
-            'y_train': y_train,
-            'y_test': y_test,
-            'feature_names': X_train.columns.tolist()
-        }
+        if split_data:
+            # 학습/테스트 분할
+            X_train, X_test, y_train, y_test = self.step6_train_test_split(df, target_column)
+            
+            print("\n✅ 전처리 완료!")
+            
+            return {
+                'processed_df': df,
+                'X_train': X_train,
+                'X_test': X_test, 
+                'y_train': y_train,
+                'y_test': y_test,
+                'feature_names': X_train.columns.tolist()
+            }
+        else:
+            # 분할하지 않고 전체 데이터 반환
+            print("\n✅ 전처리 완료! (데이터 분할 없음)")
+            
+            X = df.drop(columns=[target_column])
+            y = df[target_column]
+            
+            return {
+                'processed_df': df,
+                'X_train': X,  # 전체 데이터를 train으로 사용
+                'X_test': None, 
+                'y_train': y,
+                'y_test': None,
+                'feature_names': X.columns.tolist()
+            }
     
-    def save_processed_data(self, results, output_dir='./result'):
+    def save_processed_data(self, results, output_dir='./result', filename_prefix=''):
         """전처리된 데이터 저장"""
         import os
         os.makedirs(output_dir, exist_ok=True)
         
+        # 파일명 접두어 처리
+        prefix = f"{filename_prefix}_" if filename_prefix else ""
+        
         # 전체 데이터셋 저장
-        results['processed_df'].to_csv(f'{output_dir}/tmdb_processed_full.csv', index=False)
+        results['processed_df'].to_csv(f'{output_dir}/{prefix}tmdb_processed_full.csv', index=False)
         
-        # 학습/테스트 데이터 저장
-        pd.concat([results['X_train'], results['y_train']], axis=1).to_csv(
-            f'{output_dir}/tmdb_train.csv', index=False
-        )
-        pd.concat([results['X_test'], results['y_test']], axis=1).to_csv(
-            f'{output_dir}/tmdb_test.csv', index=False
-        )
+        if results['X_test'] is not None:
+            # 학습/테스트 데이터 저장 (분할된 경우)
+            pd.concat([results['X_train'], results['y_train']], axis=1).to_csv(
+                f'{output_dir}/{prefix}tmdb_train.csv', index=False
+            )
+            pd.concat([results['X_test'], results['y_test']], axis=1).to_csv(
+                f'{output_dir}/{prefix}tmdb_test.csv', index=False
+            )
+        else:
+            # 전체 데이터만 저장 (분할되지 않은 경우)
+            print(f"ℹ️ 테스트 데이터 분할 없음 - train/test 파일 생성 생략")
         
-        # 특성 목록 저장
+        # 특성 목록 저장 (기존 파일명 유지하여 공유)
         with open(f'{output_dir}/feature_names.json', 'w') as f:
             json.dump(results['feature_names'], f, indent=2)
         
