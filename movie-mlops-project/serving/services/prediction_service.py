@@ -130,7 +130,7 @@ class SimplePredictionService:
             data = self.data_service.data
             
             # 특성 데이터 추출 (타겟 변수와 ID 제외)
-            X = data.drop(['vote_average', 'id'], axis=1)
+            X = data.drop(['vote_average'], axis=1)
             
             # 영화 ID는 결과 매핑용으로 별도 저장
             movie_ids = data['id'].tolist()
