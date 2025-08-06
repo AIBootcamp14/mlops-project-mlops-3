@@ -1,0 +1,374 @@
+{
+  "movies": [
+    {
+      "adult": false,
+      "backdrop_path": "/1RgPyOhN4DRs225BGTlHJqCudII.jpg",
+      "genre_ids": [
+        16,
+        28,
+        14,
+        53
+      ],
+      "id": 1311031,
+      "original_language": "ja",
+      "original_title": "劇場版「鬼滅の刃」無限城編 第一章 猗窩座再来",
+      "overview": "혈귀로 변해버린 여동생 네즈코를 인간으로 되돌리기 위해 혈귀를 사냥하는 조직인 《귀살대》에 입대한 카마도 탄지로. 입대 후 동료인 아가츠마 젠이츠, 하시비라 이노스케와 함께 많은 혈귀와 싸우고, 성장하면서 세 사람의 우정과 유대는 깊어진다. 탄지로는 《귀살대》 최고위 검사인 《주》와도 함께 싸웠다. 「무한열차」에서는 염주・렌고쿠 쿄쥬로, 「유곽」에서는 음주・우즈이 텐겐, 「도공 마을」에서는 하주・토키토 무이치로, 연주・칸로지 미츠리와 함께 혈귀를 상대로 격렬한 전투를 벌였다. 그 후 다가올 혈귀와의 결전에 대비해 귀살대원들과 함께 《주》가 주도하는 합동 강화 훈련에 참가해 훈련을 받던 도중 《귀살대》의 본부인 우부야시키 저택에 나타난 키부츠지 무잔. 어르신의 위기에 달려온 《주》들과 탄지로였지만, 무잔의 술수로 의문의 공간으로 떨어지고 말았는데. 탄지로 일행이 떨어진 곳, 그곳은 혈귀의 본거지 《무한성》─ “귀살대”와 “혈귀”의 최종 결전의 포문이 열린다.",
+      "popularity": 436.1226,
+      "poster_path": "/bAZfECLMVqbeuLV0Wxwpa0oOSFD.jpg",
+      "release_date": "2025-08-22",
+      "title": "극장판 귀멸의 칼날: 무한성편",
+      "video": false,
+      "vote_average": 6.9,
+      "vote_count": 59
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/oPgXVSdGR9dGwbmvIToOCMmsdc2.jpg",
+      "genre_ids": [
+        28,
+        53,
+        80
+      ],
+      "id": 541671,
+      "original_language": "en",
+      "original_title": "Ballerina",
+      "overview": "살해당한 아버지의 복수를 원하는 이브는 전설적인 킬러 존 윅을 배출한 암살자 양성 조직 루스카 로마에서 혹독한 훈련을 거쳐 발레리나이자 킬러로 성장한다. 아버지의 죽음에 얽힌 자들을 쫓던 이브는 루스카 로마를 뛰어넘는 거대한 조직의 정체를 알아차리게 되고, 킬러들의 표적이 된 이브의 눈앞에 존 윅이 나타나는데…",
+      "popularity": 180.4738,
+      "poster_path": "/f9iSnN9yiedMgjGX4wQnHk3GZpB.jpg",
+      "release_date": "2025-08-06",
+      "title": "발레리나",
+      "video": false,
+      "vote_average": 7.5,
+      "vote_count": 1242
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/lqwwGkwJHtz9QgKtz4zeY19YgDg.jpg",
+      "genre_ids": [
+        10749,
+        18
+      ],
+      "id": 1136867,
+      "original_language": "en",
+      "original_title": "Materialists",
+      "overview": "잘나가는 커플매니저 루시. 고객의 결혼식에서 소위 ‘유니콘’이라 불리는 뉴욕 최고의 싱글남 해리에게 대시를 받는다. 같은 날, 같은 장소, 결혼식장에서 서빙 아르바이트를 하던 전남친 존과 마주치면서 루시는 예상하지 못한 고민이 시작되는데…",
+      "popularity": 74.701,
+      "poster_path": "/QhGn8LntSVpxFFSw7KU3SEscQm.jpg",
+      "release_date": "2025-08-08",
+      "title": "머티리얼리스트",
+      "video": false,
+      "vote_average": 6.788,
+      "vote_count": 255
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/eQV9rSQ6S1ja4lGTwHTnQuVhoG.jpg",
+      "genre_ids": [
+        27,
+        35,
+        14,
+        18
+      ],
+      "id": 1284120,
+      "original_language": "no",
+      "original_title": "Den stygge stesøsteren",
+      "overview": "아름다움이 곧 권력이 되는 잔혹한 경쟁의 왕국. 언제나 외모로 조롱받던 ‘엘비라’는 ‘왕자’와의 달콤한 사랑을 꿈꾼다.  그러던 어느 날, 그녀에게 찾아온 단 한 번의 기회— 의붓언니인 ‘아그네스’와 함께 왕자가 개최하는 무도회에 초대된다. 그녀는 왕자의 마음을 사로잡기 위해 아름다움에 집착하며, 그 어떤 고통도 마다하지 않는다.  아름다움을 향한 그 갈망의 끝에 끔찍한 대가가 따른다는 사실을 모른 채…",
+      "popularity": 32.564,
+      "poster_path": "/sgstfJwOCiCEMusDGatnm1qegSW.jpg",
+      "release_date": "2025-08-20",
+      "title": "어글리 시스터",
+      "video": false,
+      "vote_average": 7.3,
+      "vote_count": 289
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/9whEVuKte4Qi0LI4TzPf7glinJW.jpg",
+      "genre_ids": [
+        16,
+        10751,
+        14
+      ],
+      "id": 936108,
+      "original_language": "en",
+      "original_title": "Smurfs",
+      "overview": "언제나 노래와 춤, 흥으로 가득한 해피 스머프 마을.\r 그러던 어느 날, 마을을 이끄는 ‘파파 스머프’가 거대한 소용돌이에 휘말려 납치된다.\r 특별한 재능도, 좋아하는 것도 없이 아직 이름조차 없는 ‘그냥 스머프’는\r 세상 힙한 스머프 ‘스머페트’와 함께\r 온갖 위험이 도사리는 인간 세상으로 ‘파파 스머프’ 구출 작전에 나선다.  한편, 오랜 세월 스머프를 노려온 마법사 '가가멜’과 새롭게 등장한 그의 동생 ‘라자멜’까지\r 더욱 강력해진 악당들에 맞서기 위해\r 스머프 친구들은 도시부터 사막, 우주를 넘나들며 진정한 모험을 시작하는데...",
+      "popularity": 35.5269,
+      "poster_path": "/1lQHA18T32JyIonQUkSWhMwinjm.jpg",
+      "release_date": "2025-08-06",
+      "title": "스머프",
+      "video": false,
+      "vote_average": 6.1,
+      "vote_count": 53
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/6UaDXbpettrmcINKzhbg0ILcS5n.jpg",
+      "genre_ids": [
+        14,
+        35,
+        10751
+      ],
+      "id": 1125257,
+      "original_language": "en",
+      "original_title": "Freakier Friday",
+      "overview": "엄마 테스와 딸 애나가 서로 몸이 바뀌는 대환장 바디 체인지를 겪은 지도 어느덧 22년이 흐른 지금. 성공한 심리학자로서 첫 책 출간을 앞두고 책 사인회를 준비 중인 테스. 팝스타 매니저이자 싱글맘인 애나는 스타 셰프 에릭과 결혼을 앞두고 있지만, 애나의 딸 하퍼와 에릭의 딸 릴리는 이들의 결혼을 극구 반대한다. 한편, 진정한 하나의 가족이 되기 위해 한 지붕 아래 낯선 동거가 시작되고, 크고 작은 갈등이 이어지는 와중 설상가상 네 명의 몸이 모두 뒤바뀌며 혼란스러운 시간을 보내게 되는데… 과연 이들은 이번에도 무사히 돌아올 수 있을까?",
+      "popularity": 29.4204,
+      "poster_path": "/aI3SpOzDEZk553zLCtl0kgLJbG5.jpg",
+      "release_date": "2025-08-27",
+      "title": "프리키 프라이데이 2",
+      "video": false,
+      "vote_average": 8.9,
+      "vote_count": 7
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/uGbO4p5vEuMFyoxLwcnQZdvfoil.jpg",
+      "genre_ids": [
+        18
+      ],
+      "id": 115786,
+      "original_language": "ja",
+      "original_title": "夏の庭",
+      "overview": "그해 여름 방학, 죽음이 궁금해진 세 소년은 외딴 집에 홀로 사는 괴짜 노인을 관찰한다.  노인의 마실을 따라나서고 집 주변을 어슬렁거리던 아이들은 점점 노인과 가까워진다.  지저분하던 정원이 말끔해지고 허물어져가던 집이 알록달록해질수록 네 사람의 우정도 쑥쑥 자라난다.",
+      "popularity": 2.7308,
+      "poster_path": "/wV6PZfKUvecSnaWA5pneQ6h6Qjs.jpg",
+      "release_date": "2025-08-06",
+      "title": "여름정원",
+      "video": false,
+      "vote_average": 7.4,
+      "vote_count": 16
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/x0pkoGlwWdkzRxgQioD3cUG0awu.jpg",
+      "genre_ids": [
+        18,
+        36
+      ],
+      "id": 1000837,
+      "original_language": "pt",
+      "original_title": "Ainda Estou Aqui",
+      "overview": "바닷가 근처에 예쁜 집. 웃고 노래하는 사랑스러운 한 가족. 어느 날 찾아온 남자들은 아버지를 끌고 갔다. 아내는 물었다. \"그는 어디에, 그는 왜\" 사람은 말했다. \"그는 없다. 그를 모른다.\" 그렇게 시작된 20년의 돌림 노래. 아들은 글을 썼고 친구는 카메라를 들었으며 당신은 극장에 앉아 있다. 그날의 영원한 증인이 되기 위해.",
+      "popularity": 5.6373,
+      "poster_path": "/dq0Qdjfom6mG10B1cfQsIxYDMqe.jpg",
+      "release_date": "2025-08-20",
+      "title": "아임 스틸 히어",
+      "video": false,
+      "vote_average": 7.969,
+      "vote_count": 749
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/twkiKpUoaLl05HFdvoIhNxmkluV.jpg",
+      "genre_ids": [
+        10749
+      ],
+      "id": 928333,
+      "original_language": "zh",
+      "original_title": "念念相忘",
+      "overview": "순진한 얼굴 뒤에 제멋대로 꼼수왕 ‘양쓰훠’와 청순한 외모 뒤에 공부와 운동까지 갓벽한 찐 사기캐 ‘쉬녠녠’.  사소한 장난에서 시작된 세 판의 내기. 불타는 승부욕으로 티격태격 경쟁하던 두 사람은 어느새 서로의 세계에 스며들기 시작한다.  첫사랑은 이루어지지 않는다는 속설에 도전하는 두 사람. 과연 이들은 어떤 엔딩을 맞이할까?",
+      "popularity": 4.58,
+      "poster_path": "/WanYWjH8hr9yHzNQoHa5bPghAj.jpg",
+      "release_date": "2025-08-27",
+      "title": "첫사랑 엔딩",
+      "video": false,
+      "vote_average": 6.2,
+      "vote_count": 8
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/xE0ZIQ0uUwyVBugVCobrhU5hyme.jpg",
+      "genre_ids": [
+        18,
+        35
+      ],
+      "id": 1013154,
+      "original_language": "en",
+      "original_title": "Hard Truths",
+      "overview": "때와 장소를 가리지 않고 누구에게나 할 말 다 하는 '팬지'. 집, 길거리, 마트... 그녀가 가는 곳에는 언제나 트러블이 생긴다. 그런 그녀를 유일하게 보듬는 사람은 여동생 '샨텔'뿐, 남편과 아들은 귀를 닫은 듯 그저 무심할 뿐이다. '어머니의 날'을 맞아 '팬지'와 '샨텔'의 가족이 모두 모인 자리, '팬지'가 무슨 말을 할지 조마조마하던 가족은 그녀의 뜻밖의 반응에 당황하는데...",
+      "popularity": 3.1709,
+      "poster_path": "/bE6tjXiuKJkBTOAldHQrgcpf8UY.jpg",
+      "release_date": "2025-08-20",
+      "title": "내 말 좀 들어줘",
+      "video": false,
+      "vote_average": 6.6,
+      "vote_count": 90
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/9pdoEzieGdUTlRWTAO7QP8q1tIo.jpg",
+      "genre_ids": [
+        80,
+        28
+      ],
+      "id": 1137179,
+      "original_language": "ko",
+      "original_title": "야당",
+      "overview": "누명을 쓰고 교도소에 수감된 이강수는 검사 구관희로부터 감형을 조건으로 야당을 제안받는다. 강수는 관희의 야당이 돼 마약 수사를 뒤흔들기 시작하고, 출세에 대한 야심이 가득한 관희는 굵직한 실적을 올려 탄탄대로의 승진을 거듭한다.  한편, 마약수사대 형사 오상재는 수사 과정에서 강수의 야당질로 번번이 허탕을 치고, 끈질긴 집념으로 강수와 관희의 관계를 파고든다.  마약판을 설계하는 브로커 강수, 더 높은 곳에 오르려는 관희, 마약 범죄 소탕에 모든 것을 건 상재. 세 사람은 각자 다른 이해관계로 얽히기 시작하는데…",
+      "popularity": 3.1961,
+      "poster_path": "/22wq8xenneGDZ9K9MLIO8VchQC5.jpg",
+      "release_date": "2025-04-16",
+      "title": "야당",
+      "video": false,
+      "vote_average": 7.3,
+      "vote_count": 13
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/4stepMoz737edm7Tb5Y9C5o8cJs.jpg",
+      "genre_ids": [
+        35,
+        18,
+        10402
+      ],
+      "id": 31512,
+      "original_language": "ja",
+      "original_title": "嫌われ松子の一生",
+      "overview": "도쿄에서 백수 생활을 하던 쇼는 고향의 아버지로부터 한 통의 전화를 받는다. 행방불명 되었던 고모 마츠코가 사체로 발견되었으니 유품을 정리하라는 것. 다 허물어져가는 아파트에서 이웃들에게 혐오스런 마츠코라고 불리며 살던 그녀의 물건을 정리하며 쇼는 한 번도 만난 적 없는 마츠코의 일생을 접하게 된다. 중학교 교사로 일하며 모든 이에게 사랑받던 마츠코에게 지난 25년간 도대체 어떤 일이 일어난 것일까?  제자가 일으킨 절도사건으로 해고 당한 마츠코는 가출을 감행한다. 하지만 동거하던 작가 지망생은 자살해 버리고, 그의 친구와 불륜을 시작한 마츠코는 곧 버림받고 절망에 빠져 몸을 팔게 된다. 기둥서방에게마저 배신당한 마츠코는 그를 살해, 8년형을 언도 받는다. 출소 후, 미용사로 일하던 마츠코는 자신을 해고당하게 만들었던 절도사건의 범인인 제자 류 요이치와 재회하고 운명적인 사랑에 빠지게 되는데....",
+      "popularity": 1.4557,
+      "poster_path": "/9iCNFMHfVC25iM2hrmh1f5MCF0y.jpg",
+      "release_date": "2007-04-12",
+      "title": "혐오스런 마츠코의 일생",
+      "video": false,
+      "vote_average": 7.772,
+      "vote_count": 171
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/4BC3dC3Bz8241rSuYHoccEsoM0h.jpg",
+      "genre_ids": [
+        878,
+        35,
+        18
+      ],
+      "id": 929831,
+      "original_language": "fr",
+      "original_title": "L'Empire",
+      "overview": "프랑스 북부 해안의 평온한 마을에, 외계에서 온 존재들이 은밀히 착륙한다. 이들은 지구에서 태어난 '메시아' 아기를 둘러싸고 서로 다른 목표를 가진 채 충돌하며, 인간 세계 속에 숨어든다. 서로의 이해관계들이 교차하는 가운데, 신성한 탄생은 전 우주적 전쟁의 중심이 되는데...",
+      "popularity": 1.8612,
+      "poster_path": "/pVPgtNTrKFCDOcMNhmzzMwIlky8.jpg",
+      "release_date": "2025-08-20",
+      "title": "엠파이어",
+      "video": false,
+      "vote_average": 4.7,
+      "vote_count": 80
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/mCl0SILqkRCsBAxegP6pZDhE5mL.jpg",
+      "genre_ids": [
+        18
+      ],
+      "id": 1306061,
+      "original_language": "ja",
+      "original_title": "グランメゾン・パリ",
+      "overview": "파인다이닝의 심장, 프랑스 파리. 그곳에서 다시, 꿈을 플레이팅하다! ‘그랑 메종 도쿄’로 아시아 최초 미슐랭 3스타를 달성한 천재 셰프 오바나. 이번엔 미식의 본고장 파리에서, 새로운 전설에 도전한다. 세계의 거장들이 모인 무대, 그곳에서 최초의 아시아 셰프 3스타를 노린다. 주방의 불꽃보다 뜨거운 열정, 차별을 뚫고, 국경을 넘어 모든 것을 건 궁극의 미식 코스를 준비한다.",
+      "popularity": 1.3024,
+      "poster_path": "/72gloWDSJFqQ0QcM2jdQi2y1zhm.jpg",
+      "release_date": "2025-08-27",
+      "title": "그랑 메종 파리",
+      "video": false,
+      "vote_average": 8.5,
+      "vote_count": 2
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/kdDQn3Oi7iy1VK7GWhMRyPXUf9K.jpg",
+      "genre_ids": [
+        99,
+        10402
+      ],
+      "id": 24128,
+      "original_language": "en",
+      "original_title": "Stop Making Sense",
+      "overview": "1983년 할리우드 판타지스 극장, 그날의 무대는 전설이 되었다. “안녕하세요, 테이프 하나 틀게요.” 뉴욕 언더그라운드 클럽에서 출발해 시대의 아이콘이 된 뉴웨이브 밴드 '토킹 헤즈'. 프론트맨 '데이비드 번’이 한 대의 어쿠스틱 기타를 들고 무대에 오른다. 곡이 더해질수록 멤버들이 차례로 등장하며, 무대는 에너지로 폭발하고 퍼포먼스는 예술로 완성된다. 인터뷰도, 설명도 없다. 오직 음악과 무대만으로 88분의 클라이맥스를 선사하는 역대 최고의 콘서트 영화.",
+      "popularity": 1.258,
+      "poster_path": "/vAZxtf6eCE7LERr9aRSvoeJ2V4z.jpg",
+      "release_date": "2025-08-13",
+      "title": "스탑 메이킹 센스",
+      "video": false,
+      "vote_average": 8.3,
+      "vote_count": 316
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/xnnBBwUq2FL2NhF6WTa27AetMqt.jpg",
+      "genre_ids": [
+        10749,
+        35,
+        18
+      ],
+      "id": 1168294,
+      "original_language": "en",
+      "original_title": "Young Werther",
+      "overview": "자유롭고 낭만적을 좇는 베르테르는 운명처럼 사랑에 빠진다. 하지만 그녀는 이미 약혼자가 있는 사람. 친구의 만류에도 불구하고 그는 그녀의 마음을 얻기 위해 엉뚱하고 무모한 계획을 시작한다. 현실과 사랑 사이, 웃음과 눈물이 공존하는 그의 좌충우돌 러브 레이스! 누구보다 뜨겁게, 누구보다 진심으로 사랑을 꿈꾼 베르테르의 유쾌한 로맨스가 펼쳐진다.",
+      "popularity": 0.4724,
+      "poster_path": "/mIv7evmgfXWvQ4IxY8BPEX0j5iI.jpg",
+      "release_date": "2025-08-14",
+      "title": "젊은 베르테르의 사랑",
+      "video": false,
+      "vote_average": 7.0,
+      "vote_count": 2
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/nnDVfcM9J6FNBerIm0rjUsljwCx.jpg",
+      "genre_ids": [
+        16,
+        10751,
+        14
+      ],
+      "id": 1134680,
+      "original_language": "cs",
+      "original_title": "Pyšná princezna",
+      "overview": "부드러운 목소리를 지녔고 다정한 배려가 몸에 밴 ‘벤자민’ 왕은 가장 아름다운 ‘캐롤리나’ 공주를 처음 본 순간 한눈에 반한다. 하지만 건방지고 까칠한 ‘캐롤리나’ 공주는 사절단을 통해 보낸 그의 청혼을 가볍게 무시한다. 포기를 모르는 ‘벤자민’ 왕은 정원사로 신분을 숨기고 ‘캐롤리나’ 공주에게 다가가 그녀의 마음을 조금씩 사로잡기 시작한다. 한편 ‘캐롤리나’ 공주의 결혼을 이용해 한몫 단단히 챙기려던 ‘막시무스’ 삼총사는 ‘벤자민’이 방해가 되자, 그를 없애고 둘을 떼어놓을 음모를 꾸미는데…",
+      "popularity": 0.3707,
+      "poster_path": "/g1Zp41nUOR23Je5XO9gNaemsIDt.jpg",
+      "release_date": "2025-08-15",
+      "title": "프라우드 프린세스: 로열 어드벤처",
+      "video": false,
+      "vote_average": 6.6,
+      "vote_count": 5
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/6b0ryx2Okijr9d2pusAkccR1EOk.jpg",
+      "genre_ids": [
+        99
+      ],
+      "id": 1095494,
+      "original_language": "en",
+      "original_title": "Geoff McFetridge: Drawing a Life",
+      "overview": "“그의 디자인은 어디에나 존재한다” 사람들로 붐비는 지하철역부터 애플, 나이키, 에르메스 등 글로벌 브랜드와의 협업과 영화 <그녀>, <존 말코비치 되기>까지··· 평범한 하루 속에서 즐거움을 발견하고 일상의 유쾌함을 디자인하는 그래픽 아티스트 제프 맥페트리지. 그가 달리고, 그리고, 생각하는 모든 순간을 담다.",
+      "popularity": 0.1964,
+      "poster_path": "/5gCxdWuhirDOsCUsRnQj07xZt89.jpg",
+      "release_date": "2025-08-13",
+      "title": "제프 맥페트리지: 드로잉 라이프",
+      "video": false,
+      "vote_average": 4.5,
+      "vote_count": 2
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/y46l34DHFL0fjlGnisvaZbofaF8.jpg",
+      "genre_ids": [
+        18
+      ],
+      "id": 1200753,
+      "original_language": "es",
+      "original_title": "Tú me abrasas",
+      "overview": "고대 그리스의 시인 사포와 님프 브리토마르티스가 바다에서 사랑과 죽음에 관한 대화를 나눈다. 사포는 실연의 고통 끝에 바다로 몸을 던졌고, 브리토마르티스는 자신을 쫓아오는 남자에게서 도망치다 절벽에서 떨어져 바다에 빠졌다. 그들은 자신들을 둘러싼 이야기와 이미지들을 생각하며, 욕망의 달콤씁쓸한 본질을 잠시나마 이해하고자 한다. 체사레 파베세의 저작 ‘레우코와의 대화’ 중 ‘바다 거품'을 여러 각주와 함께 각색한 작품.",
+      "popularity": 0.0743,
+      "poster_path": "/cUP0PLQvxB3IWlYF8eiZqOhvXno.jpg",
+      "release_date": "2025-08-27",
+      "title": "너는 나를 불태워",
+      "video": false,
+      "vote_average": 10.0,
+      "vote_count": 1
+    }
+  ],
+  "count": 19,
+  "crawled_date": "2025-08-05 18:58:17",
+  "data_type": "test_upcoming_rated"
+}
