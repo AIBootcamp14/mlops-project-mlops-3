@@ -150,10 +150,24 @@ class TMDBDataPreprocessor:
                                   labels=['Low', 'Medium', 'High', 'Excellent'])
         
         # 인기도 구간
-        df['popularity_tier'] = pd.qcut(df['popularity'], 
-                                       q=5, 
-                                       labels=['Very_Low', 'Low', 'Medium', 'High', 'Very_High'],
-                                       duplicates='drop')
+        try:
+            df['popularity_tier'] = pd.qcut(df['popularity'], 
+                                           q=5, 
+                                           labels=['Very_Low', 'Low', 'Medium', 'High', 'Very_High'],
+                                           duplicates='drop')
+        except ValueError:
+            # 데이터가 적거나 중복이 많을 경우 구간 수를 줄임
+            unique_values = df['popularity'].nunique()
+            if unique_values >= 3:
+                df['popularity_tier'] = pd.qcut(df['popularity'], 
+                                               q=min(3, unique_values), 
+                                               labels=['Low', 'Medium', 'High'][:min(3, unique_values)],
+                                               duplicates='drop')
+            else:
+                # 고유값이 3개 미만인 경우 수동으로 라벨 할당
+                df['popularity_tier'] = pd.cut(df['popularity'], 
+                                              bins=[-float('inf'), df['popularity'].median(), float('inf')],
+                                              labels=['Low', 'High'])
         
         # 콘텐츠 관련 특성
         if 'adult' in df.columns:
@@ -228,8 +242,9 @@ class TMDBDataPreprocessor:
         # 수치형 특성만 선택
         numeric_features = X.select_dtypes(include=[np.number]).columns.tolist()
         
-        # ID, 바이너리 특성 제외
-        exclude_features = ['id', 'content_id'] + [col for col in numeric_features if X[col].nunique() <= 2]
+        # ID와 실제 바이너리 특성(is_로 시작하는 특성) 제외
+        binary_features = [col for col in numeric_features if col.startswith('is_') or col in ['has_overview', 'has_poster', 'has_backdrop', 'video']]
+        exclude_features = ['id', 'content_id'] + binary_features
         numeric_features = [col for col in numeric_features if col not in exclude_features]
         
         print(f"스케일링 대상 특성: {len(numeric_features)}개")
@@ -402,8 +417,8 @@ class TMDBDataPreprocessor:
             # 전체 데이터만 저장 (분할되지 않은 경우)
             print(f"ℹ️ 테스트 데이터 분할 없음 - train/test 파일 생성 생략")
         
-        # 특성 목록 저장 (기존 파일명 유지하여 공유)
-        with open(f'{output_dir}/feature_names.json', 'w') as f:
+        # 특성 목록 저장 (prefix 추가하여 각 데이터셋별로 저장)
+        with open(f'{output_dir}/{prefix}feature_names.json', 'w') as f:
             json.dump(results['feature_names'], f, indent=2)
         
         print(f"💾 전처리된 데이터가 {output_dir}에 저장되었습니다.")
