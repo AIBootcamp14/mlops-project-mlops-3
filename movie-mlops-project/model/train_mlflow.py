@@ -2,6 +2,7 @@ import logging
 import os
 import sys
 import argparse
+import json
 
 import mlflow
 import mlflow.xgboost
@@ -21,6 +22,7 @@ from model.utils import get_config_value, load_data, load_feature_names
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+
 def train_model(
     train_filepath: str,
     target_column: str,
@@ -31,7 +33,6 @@ def train_model(
 ) -> None:
     """
     XGBoost 모델을 학습하고 MLflow에 로깅합니다.
-    - 모델 레지스트리 등록 및 로컬 저장 로직은 이 함수에서 제외됩니다.
     """
     logging.info("모델 학습을 시작합니다.")
 
@@ -45,6 +46,17 @@ def train_model(
 
         try:
             train_df = load_data(train_filepath)
+
+            # ✅ 모든 컬럼 이름을 문자열로 강제 변환
+            train_df.columns = train_df.columns.astype(str)
+
+            # ✅ 디버깅: feature_names와 컬럼 비교
+            missing = [f for f in feature_names if f not in train_df.columns]
+            if missing:
+                logging.error(f"❗ train_df에 존재하지 않는 feature들: {missing}")
+                logging.info(f"💡 train_df 컬럼 목록: {train_df.columns.tolist()}")
+                raise KeyError(f"{missing} not in train_df.columns")
+
             X_train = train_df[feature_names]
             y_train = train_df[target_column]
 
@@ -101,11 +113,16 @@ if __name__ == "__main__":
             current_xgb_params['eta'] = args.eta
             logging.info(f"eta 인자 오버라이드: {args.eta}")
 
-        # ✅ 학습 실행 (반환값 없음)
+        # ✅ feature_names 불러오기
+        feature_names = load_feature_names(
+            os.path.join(project_root, processed_data_dir, feature_names_file)
+        )
+
+        # ✅ 학습 실행
         train_model(
             train_filepath=os.path.join(project_root, processed_data_dir, train_data_file),
             target_column=target_column,
-            feature_names=load_feature_names(os.path.join(project_root, processed_data_dir, feature_names_file)),
+            feature_names=feature_names,
             xgb_params=current_xgb_params,
             mlflow_tracking_uri=mlflow_tracking_uri,
             mlflow_experiment_name=mlflow_experiment_name,
