@@ -26,17 +26,25 @@ dag = DAG(
     description='7개 스크립트를 순차 실행하는 영화 평점 예측 파이프라인',
 )
 
-def run_script(script_name):
+def run_script(script_name, env_vars=None):
     script_path = os.path.join(project_root, script_name)
     if not os.path.exists(script_path):
         raise FileNotFoundError(f"{script_path} 가 존재하지 않습니다.")
 
     logging.info(f"{script_name} 실행 시작")
+
+    env = os.environ.copy()
+    if env_vars:
+        env.update(env_vars)
+    
+    
+    
     result = subprocess.run(
         [sys.executable, script_path],
         cwd=project_root,
         capture_output=True,
         text=True,
+        env=env,
     )
 
     logging.info(f"{script_name} stdout:\n{result.stdout}")
@@ -47,13 +55,13 @@ def run_script(script_name):
 
 crawl_task = PythonOperator(
     task_id='run_crawler',
-    python_callable=lambda: run_script('preprocessing/crawler.py'),
-    dag=dag,
-    env={
-        **os.environ,  # 기존 환경변수 포함
+    python_callable=lambda: run_script('preprocessing/crawler.py',env_vars={
         "TMDB_API_KEY": "4cb727de9fdb0d2cf868b2c31ab39e93",
         "TMDB_BASE_URL": "https://api.themoviedb.org/3/movie",
-    },
+
+    }),
+    dag=dag,
+    
 )
 
 preprocess_task = PythonOperator(
