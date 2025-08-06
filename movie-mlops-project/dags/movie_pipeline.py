@@ -70,7 +70,7 @@ def run_script(script_name, env_vars=None):
 
 # 크롤러 스크립트는 API 키 등 환경변수가 필요해 별도 함수로 분리
 def run_crawler():
-    return run_script('preprocessing/crawler.py', env_vars={
+    run_script('preprocessing/crawler.py', env_vars={
         "TMDB_API_KEY": "4cb727de9fdb0d2cf868b2c31ab39e93",
         "TMDB_BASE_URL": "https://api.themoviedb.org/3/movie",
     })
