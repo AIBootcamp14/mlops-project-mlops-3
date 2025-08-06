@@ -5,6 +5,9 @@ from datetime import timedelta
 import os
 import logging
 import subprocess
+import sys
+
+
 
 default_args = {
     'owner': 'airflow',
@@ -12,7 +15,7 @@ default_args = {
     'retries': 1,
 }
 
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+project_root = "/mnt/c/Users/can40/mlops-project-mlops-3/movie-mlops-project"
 
 dag = DAG(
     'movie_pipeline_all_scripts',
@@ -30,7 +33,7 @@ def run_script(script_name):
 
     logging.info(f"{script_name} 실행 시작")
     result = subprocess.run(
-        ['python3', script_path],
+        [sys.executable, script_path],
         cwd=project_root,
         capture_output=True,
         text=True,
@@ -44,37 +47,37 @@ def run_script(script_name):
 
 crawl_task = PythonOperator(
     task_id='run_crawler',
-    python_callable=lambda: run_script('crawler.py'),
+    python_callable=lambda: run_script('preprocessing/crawler.py'),
     dag=dag,
 )
 
 preprocess_task = PythonOperator(
     task_id='run_preprocessing',
-    python_callable=lambda: run_script('preprocessing.py'),
+    python_callable=lambda: run_script('preprocessing/preprocessing.py'),
     dag=dag,
 )
 
 train_task = PythonOperator(
     task_id='run_train',
-    python_callable=lambda: run_script('train.py'),
+    python_callable=lambda: run_script('model/train.py'),
     dag=dag,
 )
 
 evaluate_task = PythonOperator(
     task_id='run_evaluate',
-    python_callable=lambda: run_script('evaluate.py'),
+    python_callable=lambda: run_script('model/evaluate.py'),
     dag=dag,
 )
 
 register_task = PythonOperator(
     task_id='run_register_mlflow',
-    python_callable=lambda: run_script('register_mlflow.py'),
+    python_callable=lambda: run_script('model/register_mlflow.py'),
     dag=dag,
 )
 
 main_task = PythonOperator(
     task_id='run_main',
-    python_callable=lambda: run_script('main.py'),
+    python_callable=lambda: run_script('preprocessing/main.py'),
     dag=dag,
 )
 
