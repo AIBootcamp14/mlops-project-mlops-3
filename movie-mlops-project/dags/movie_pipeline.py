@@ -49,6 +49,11 @@ crawl_task = PythonOperator(
     task_id='run_crawler',
     python_callable=lambda: run_script('preprocessing/crawler.py'),
     dag=dag,
+    env={
+        **os.environ,  # 기존 환경변수 포함
+        "TMDB_API_KEY": "4cb727de9fdb0d2cf868b2c31ab39e93",
+        "TMDB_BASE_URL": "https://api.themoviedb.org/3/movie",
+    },
 )
 
 preprocess_task = PythonOperator(
