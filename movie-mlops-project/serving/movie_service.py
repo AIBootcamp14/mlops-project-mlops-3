@@ -1,13 +1,5 @@
-import boto3      # AWS S3 접근용 라이브러리
-import logging    # 로그 출력용 라이브러리
-import os         # 환경변수 및 파일 경로 처리용
-
-# 로깅 설정 - 콘솔에 정보를 출력하도록 설정 (먼저 설정!)
-logging.basicConfig(
-    level=logging.INFO,  # INFO 레벨 이상만 출력 (DEBUG는 출력 안함)
-    format="%(asctime)s - %(levelname)s - %(message)s"  # 시간 - 레벨 - 메시지 형식
-)
-logger = logging.getLogger(__name__)  # 현재 모듈명으로 로거 생성
+import logging
+import os
 
 # .env 파일 로드 (python-dotenv 필요: pip install python-dotenv)
 try:
@@ -23,192 +15,246 @@ try:
     env_loaded = False
     for path in possible_paths:
         if load_dotenv(dotenv_path=path):
-            logger.info(f"📁 .env 파일 로드 완료: {path}")
+            logging.info(f"📁 .env 파일 로드 완료: {path}")
             env_loaded = True
             break
     
     if not env_loaded:
-        logger.warning("⚠️ .env 파일을 찾을 수 없음")
-    
-    # 🔍 실제로 AWS 키가 로드되었는지 확인
-    aws_key = os.getenv('AWS_ACCESS_KEY_ID')
-    if aws_key:
-        # 보안을 위해 키의 일부만 표시
-        masked_key = aws_key[:4] + "*" * (len(aws_key) - 8) + aws_key[-4:]
-        logger.info(f"🔑 AWS Access Key 확인: {masked_key}")
-    else:
-        logger.warning("⚠️ AWS_ACCESS_KEY_ID 환경변수가 설정되지 않음")
+        logging.warning("⚠️ .env 파일을 찾을 수 없음")
     
 except ImportError:
-    logger.warning("⚠️ python-dotenv가 설치되지 않음. 환경변수를 직접 설정하세요.")
-    logger.warning("💡 설치 방법: pip install python-dotenv")
+    logging.warning("⚠️ python-dotenv가 설치되지 않음. 환경변수를 직접 설정하세요.")
+    logging.warning("💡 설치 방법: pip install python-dotenv")
 except Exception as e:
-    logger.warning(f"⚠️ .env 파일 로드 실패: {e}")
-    logger.warning("💡 환경변수를 직접 설정하거나 .env 파일 경로를 확인하세요.")
+    logging.warning(f"⚠️ .env 파일 로드 실패: {e}")
+
+# 로깅 설정 - 콘솔에 정보를 출력하도록 설정
+logging.basicConfig(
+    level=logging.INFO,  # INFO 레벨 이상만 출력 (DEBUG는 출력 안함)
+    format="%(asctime)s - %(levelname)s - %(message)s"  # 시간 - 레벨 - 메시지 형식
+)
+logger = logging.getLogger(__name__)  # 현재 모듈명으로 로거 생성
+
+# MLflow 서비스 import
+from services.mlflow_service import MLflowModelService
 
 class MoviePredictionService:
     """
-    영화 평점 예측 서비스 클래스
+    영화 평점 예측 서비스 메인 클래스 (MLflow 기반)
     
-    - 기본 설정값 초기화
-    - S3 클라이언트 연결 설정
-    - S3 연결 상태 확인
+    🔄 팀원 제안 반영:
+    - S3 직접 접근 방식 → MLflow 모델 레지스트리 방식
+    - 하드코딩된 모델 경로 → Production 스테이지 자동 추적
+    - 수동 모델 관리 → 자동화된 모델 버전 관리
+    
+    ✅ 현재 구현 단계:
+    - 1단계: MLflow 모델 서비스 통합 (완료)
+    - 2단계: CSV 데이터 로드 기능 (예정)
+    - 3단계: 예측 수행 기능 (예정)
+    - 4단계: FastAPI 연동 (예정)
     """
+    
     def __init__(self):
         """
-        객체가 생성될 때 한 번만 실행되며, 필요한 설정값들을 저장
-        아직 실제 작업(다운로드, 예측 등)은 하지 않고 설정만 준비
-        """
-        # S3 관련 설정값들 (AWS 클라우드 스토리지)
-        self.bucket_name = "mlopsproject-3"  # 모델이 저장된 S3 버킷 이름
-        self.model_key = "models/xgb_md6_eta0_3.pkl"  # 버킷 내 모델 파일 경로
-        self.aws_region = "ap-northeast-2"  # AWS 서울 리전
+        영화 평점 예측 서비스 초기화
         
-        # 로컬 파일 경로
+        MLflow 기반 모델 서비스와 데이터 처리 준비
+        """
+        logger.info("🚀 MoviePredictionService 초기화 시작...")
+        
+        # === MLflow 모델 서비스 ===
+        logger.info("🤖 MLflow 모델 서비스 초기화 중...")
+        self.mlflow_service = MLflowModelService()
+        
+        # === 데이터 관련 설정 ===
         self.test_csv_path = "../preprocessing/result/tmdb_test.csv"
+        self.test_data = None  # CSV 데이터가 저장될 공간 (2단계에서 사용)
+        self.predictions = []  # 예측 결과들이 저장될 리스트 (3단계에서 사용)
         
-        # 서비스 상태를  나타내는 변수
-        self.model = None # XGBoost 모델 객체가 저장될 공간
-        self.is_model_loaded = False  # 모델 로드 완료 여부 (True/False)
-        self.test_data = None  # CSV 데이터가 저장될 공간
-        self.predictions = []  # 예측 결과들이 저장될 리스트
+        # === 서비스 상태 ===
+        self.is_ready_for_prediction = False  # 예측 준비 완료 여부
         
-        # S3 클라이언트 (AWS와 통신하는 객체)
-        self.s3_client = None
+        logger.info("✅ MoviePredictionService 초기화 완료")
         
-        # S3 클라이언트 설정 실행
-        self._setup_s3()
-        
-        logger.info("✅ MoviePredictionService 초기화 완료 (1단계)")
-        
-        
-    def _setup_s3(self):
+    def check_service_health(self):
         """
-        S3 클라이언트 설정 함수
+        전체 서비스 상태 확인
         
-        AWS S3와 통신할 수 있는 클라이언트 객체를 생성
-        환경변수나 AWS 설정 파일에서 인증 정보를 자동으로 찾아 사용
-        
-        인증 정보를 찾는 순서:
-        1. 환경변수 (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
-        2. ~/.aws/credentials 파일
-        3. IAM 역할 (EC2에서 실행시)
-        """
-        try:
-            logger.info("🔗 S3 클라이언트 설정 중...")
-            
-            # boto3.client()로 S3 클라이언트 생성
-            # region_name: 데이터센터 위치 지정 (서울 리전)
-            self.s3_client = boto3.client('s3', region_name=self.aws_region)
-            
-            logger.info(f"✅ S3 클라이언트 설정 완료 (리전: {self.aws_region})")
-            
-        except Exception as e:
-            # 인증 정보가 없거나 잘못된 경우 오류 발생
-            logger.error(f"❌ S3 클라이언트 설정 실패: {e}")
-            logger.error("💡 AWS 인증 정보를 확인하세요:")
-            logger.error("   - 환경변수: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY")
-            logger.error("   - 파일: ~/.aws/credentials")
-            logger.error("   - IAM 역할 (EC2에서 실행시)")
-            
-            
-    def check_s3_connection(self):
-        """
-        S3 연결 상태 확인 함수 (1단계)
-        
-        실제로 S3 버킷에 접근 가능한지 테스트
-        클라이언트 생성은 성공해도 실제 접근 권한이 없을 수 있기 때문에
-        head_bucket() API를 호출해서 실제 접근 가능 여부를 확인
+        MLflow 연결, 모델 로드 등 모든 구성 요소의 상태를 확인합니다.
+        FastAPI의 헬스체크 엔드포인트에서 사용할 예정입니다.
         
         Returns:
-            dict: 연결 상태 정보
-            {
-                'success': True/False,
-                'message': '상태 메시지',
-                'bucket_name': '버킷명'
-            }
+            dict: 전체 서비스 상태 정보
         """
-        if not self.s3_client:
-            return {
-                'success': False,
-                'message': 'S3 클라이언트가 설정되지 않았습니다.',
-                'bucket_name': None
+        logger.info("🔍 서비스 상태 확인 중...")
+        
+        # MLflow 연결 상태 확인
+        mlflow_connection = self.mlflow_service.check_mlflow_connection()
+        
+        # Production 모델 존재 여부 확인
+        production_model = self.mlflow_service.check_production_model_exists()
+        
+        # 모델 로드 상태 확인
+        model_info = self.mlflow_service.get_model_info()
+        
+        # 전체 상태 구성
+        health_status = {
+            'service_name': 'MoviePredictionService',
+            'status': 'healthy' if (mlflow_connection['success'] and production_model['exists']) else 'unhealthy',
+            'mlflow_connection': mlflow_connection,
+            'production_model': production_model,
+            'model_info': model_info,
+            'ready_for_prediction': self.is_ready_for_prediction,
+            'components': {
+                'mlflow_service': '✅' if mlflow_connection['success'] else '❌',
+                'production_model': '✅' if production_model['exists'] else '❌',
+                'model_loaded': '✅' if model_info.get('model_loaded', False) else '❌',
+                'data_service': '⏳' if not hasattr(self, 'data_service') else '✅',  # 2단계에서 구현 예정
             }
+        }
+        
+        return health_status
+        
+    def initialize_model(self):
+        """
+        모델 초기화 (Production 모델 로드)
+        
+        MLflow 레지스트리에서 Production 스테이지의 모델을 로드합니다.
+        
+        Returns:
+            dict: 모델 초기화 결과
+        """
+        logger.info("🤖 모델 초기화 시작...")
+        
+        # MLflow 서비스를 통해 Production 모델 로드
+        result = self.mlflow_service.load_production_model()
+        
+        if result['success']:
+            logger.info("✅ 모델 초기화 완료!")
+            # 향후 예측 준비 상태 업데이트 (데이터 서비스도 준비되면)
+            # self.is_ready_for_prediction = True  # 2단계에서 활성화 예정
+        else:
+            logger.error("❌ 모델 초기화 실패!")
             
-        try:
-            logger.info(f"🔍 S3 버킷 연결 확인 중: {self.bucket_name}")
-            
-            # head_bucket() - 버킷 정보를 가져오는 API 호출
-            # 이 호출이 성공하면 버킷에 접근 권한이 있다는 의미
-            self.s3_client.head_bucket(Bucket=self.bucket_name)
-            
-            logger.info(f"✅ S3 버킷 연결 성공!")
-            
-            return {
-                'success': True,
-                'message': 'S3 버킷에 정상적으로 연결되었습니다.',
-                'bucket_name': self.bucket_name
-            }
-            
-        except Exception as e:
-            logger.error(f"❌ S3 버킷 연결 실패: {e}")
-            
-            # 오류 종류별 상세 메시지
-            error_message = str(e)
-            if "NoSuchBucket" in error_message:
-                detailed_message = f"버킷 '{self.bucket_name}'을 찾을 수 없습니다."
-            elif "AccessDenied" in error_message:
-                detailed_message = f"버킷 '{self.bucket_name}'에 대한 접근 권한이 없습니다."
-            else:
-                detailed_message = f"알 수 없는 오류: {error_message}"
-            
-            return {
-                'success': False,
-                'message': detailed_message,
-                'bucket_name': self.bucket_name
-            }
-            
-def test_step1():
+        return result
+
+def test_step1_mlflow():
     """
-    1단계 테스트 함수
+    1단계 테스트: MLflow 기반 모델 로드 테스트
     
-    S3 클라이언트 설정과 연결 상태만 확인합니다.
-    모델 다운로드나 예측은 하지 않습니다.
+    팀원 제안에 따른 새로운 테스트 함수입니다.
+    S3 직접 접근 대신 MLflow 레지스트리를 사용합니다.
     """
-    print("🧪 1단계 테스트: 기본 구조와 S3 연결")
+    print("🧪 1단계 테스트: MLflow 기반 모델 로드")
     print("=" * 50)
     
-    # 1. 서비스 객체 생성
-    print("📦 서비스 객체 생성 중...")
-    service = MoviePredictionService()
+    # === 1. 서비스 객체 생성 ===
+    print("📦 MoviePredictionService 생성 중...")
+    try:
+        service = MoviePredictionService()
+        print("✅ 서비스 객체 생성 완료")
+    except Exception as e:
+        print(f"❌ 서비스 객체 생성 실패: {e}")
+        print("💡 해결방법:")
+        print("   1. MLflow 서버가 실행 중인지 확인")
+        print("   2. 환경변수 MLFLOW_TRACKING_URI 설정")
+        return False
     
-    # 2. S3 연결 상태 확인
-    print("\n🔍 S3 연결 상태 확인 중...")
-    connection_result = service.check_s3_connection()
+    # === 2. 서비스 상태 확인 ===
+    print(f"\n🔍 서비스 상태 확인 중...")
+    health_status = service.check_service_health()
     
-    # 3. 결과 출력
-    print(f"\n📊 연결 테스트 결과:")
-    print(f"   성공 여부: {connection_result['success']}")
-    print(f"   메시지: {connection_result['message']}")
-    print(f"   버킷명: {connection_result['bucket_name']}")
+    print(f"📊 서비스 상태:")
+    print(f"   전체 상태: {health_status['status']}")
+    print(f"   MLflow 연결: {health_status['components']['mlflow_service']}")
+    print(f"   Production 모델: {health_status['components']['production_model']}")
+    print(f"   모델 로드: {health_status['components']['model_loaded']}")
     
-    # 4. 다음 단계 안내
-    if connection_result['success']:
-        print(f"\n🎉 1단계 성공!")
-        print(f"✅ S3 클라이언트 설정: 완료")
-        print(f"✅ S3 버킷 연결: 완료")
-        print(f"\n🎯 1단계 완료! 이제 커밋 후 2단계 진행 가능")
-        print(f"   → 다음: 2단계 - S3에서 모델 다운로드 기능 추가")
-        return True
+    # === 3. Production 모델 로드 시도 ===
+    if health_status['production_model']['exists']:
+        print(f"\n🤖 Production 모델 로드 중...")
+        model_result = service.initialize_model()
+        
+        print(f"\n📊 모델 로드 결과:")
+        print(f"   성공 여부: {model_result['success']}")
+        print(f"   메시지: {model_result['message']}")
+        print(f"   모델 버전: {model_result.get('model_version', 'N/A')}")
+        
+        if model_result['success']:
+            # 모델 상세 정보 출력
+            model_info = service.mlflow_service.get_model_info()
+            print(f"\n📋 모델 상세 정보:")
+            print(f"   모델 타입: {model_info.get('model_type', 'N/A')}")
+            print(f"   레지스트리명: {model_info.get('registry_name', 'N/A')}")
+            if model_info.get('n_features'):
+                print(f"   입력 특성 수: {model_info['n_features']}")
+            if model_info.get('is_xgboost'):
+                print(f"   XGBoost 모델: ✅")
+            
+            print(f"\n🎉 1단계 성공!")
+            print(f"✅ MLflow 서버 연결: 완료")
+            print(f"✅ Production 모델 확인: 완료")
+            print(f"✅ 모델 로드: 완료")
+            print(f"\n🎯 1단계 완료! 이제 커밋 후 2단계 진행 가능")
+            print(f"   → 다음: 2단계 - CSV 데이터 로드 기능 추가")
+            return True
+        else:
+            print(f"\n❌ 1단계 실패: 모델 로드 실패")
+            print(f"💡 해결방법:")
+            print(f"   1. register_mlflow.py 실행하여 Production 모델 등록")
+            print(f"   2. MLflow UI에서 모델 상태 확인")
+            return False
     else:
-        print(f"\n❌ 1단계 실패!")
+        print(f"\n❌ 1단계 실패: Production 모델이 존재하지 않음")
         print(f"💡 해결방법:")
-        print(f"   1. AWS 인증 정보 설정 확인")
-        print(f"   2. 버킷명이 정확한지 확인: {service.bucket_name}")
-        print(f"   3. 인터넷 연결 상태 확인")
+        print(f"   1. 팀원2의 register_mlflow.py 스크립트 실행")
+        print(f"   2. MLflow UI에서 모델이 Production 스테이지에 있는지 확인")
+        print(f"   3. 모델 레지스트리 이름 확인: {service.mlflow_service.model_registry_name}")
         return False
 
+def show_mlflow_setup_guide():
+    """
+    MLflow 설정 가이드 출력
+    """
+    print("🔧 MLflow 설정 가이드")
+    print("=" * 50)
+    
+    print("📝 1. MLflow 서버 실행:")
+    print("   mlflow server --host 0.0.0.0 --port 5001")
+    
+    print("\n📝 2. 환경변수 설정:")
+    print("   export MLFLOW_TRACKING_URI=http://localhost:5001")
+    print("   export MODEL_REGISTRY_NAME=MovieRatingXGBoostModel")
+    
+    print("\n📝 3. Production 모델 등록:")
+    print("   팀원2의 register_mlflow.py 스크립트 실행")
+    
+    print("\n📝 4. MLflow UI 확인:")
+    print("   브라우저에서 http://localhost:5001 접속")
+    print("   Models 탭에서 Production 스테이지 모델 확인")
+    
+    print("\n📝 5. 테스트 실행:")
+    print("   python movie_service.py")
 
 # 이 파일을 직접 실행할 때만 테스트 함수 실행
 if __name__ == "__main__":
-    test_step1()
+    import sys
+    
+    # 🎯 명령행 인수로 다양한 옵션 제공
+    if len(sys.argv) > 1:
+        if sys.argv[1] == "test":
+            # python movie_service.py test
+            test_step1_mlflow()
+        elif sys.argv[1] == "help":
+            # python movie_service.py help
+            show_mlflow_setup_guide()
+        else:
+            print("사용법:")
+            print("  python movie_service.py       # 1단계 MLflow 테스트 실행")
+            print("  python movie_service.py test  # 1단계 MLflow 테스트 실행")
+            print("  python movie_service.py help  # MLflow 설정 가이드")
+    else:
+        # python movie_service.py (기본 실행)
+        print("🚀 MLflow 기반 1단계 테스트를 시작합니다...")
+        print("MLflow 설정이 필요하다면: python movie_service.py help\n")
+        test_step1_mlflow()
