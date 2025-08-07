@@ -1,9 +1,5 @@
 [
   "id",
-  "release_year_scaled",
-  "release_month_scaled",
-  "release_quarter_scaled",
-  "movie_age_scaled",
   "is_summer_release",
   "is_holiday_release",
   "is_spring_release",
