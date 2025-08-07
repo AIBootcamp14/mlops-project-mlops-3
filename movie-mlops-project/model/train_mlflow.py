@@ -2,6 +2,7 @@ import logging
 import os
 import sys
 import argparse
+import json
 
 import mlflow
 import mlflow.xgboost
@@ -17,9 +18,10 @@ if project_root not in sys.path:
 # ✅ .env 로드 (AWS 자격 정보용)
 load_dotenv()
 
-from model.utils import get_config_value, load_data, load_feature_names, save_model
+from model.utils import get_config_value, load_data, load_feature_names
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 
 def train_model(
     train_filepath: str,
@@ -27,11 +29,8 @@ def train_model(
     feature_names: list,
     xgb_params: dict,
     mlflow_tracking_uri: str,
-    mlflow_experiment_name: str,
-    model_registry_name: str,
-    model_output_dir: str,
-    model_filename: str
-) -> tuple:
+    mlflow_experiment_name: str
+) -> None:
     """
     XGBoost 모델을 학습하고 MLflow에 로깅합니다.
     """
@@ -47,6 +46,17 @@ def train_model(
 
         try:
             train_df = load_data(train_filepath)
+
+            # ✅ 모든 컬럼 이름을 문자열로 강제 변환
+            train_df.columns = train_df.columns.astype(str)
+
+            # ✅ 디버깅: feature_names와 컬럼 비교
+            missing = [f for f in feature_names if f not in train_df.columns]
+            if missing:
+                logging.error(f"❗ train_df에 존재하지 않는 feature들: {missing}")
+                logging.info(f"💡 train_df 컬럼 목록: {train_df.columns.tolist()}")
+                raise KeyError(f"{missing} not in train_df.columns")
+
             X_train = train_df[feature_names]
             y_train = train_df[target_column]
 
@@ -63,16 +73,10 @@ def train_model(
             mlflow.xgboost.log_model(
                 xgb_model=model,
                 artifact_path="model",
-                registered_model_name=model_registry_name,
             )
-            logging.info("MLflow에 모델 아티팩트 로깅 완료")
+            logging.info("MLflow에 모델 아티팩트 로깅 완료 (레지스트리 등록 제외)")
 
-            model_full_path = os.path.join(model_output_dir, model_filename)
-            os.makedirs(model_output_dir, exist_ok=True)
-            save_model(model, model_full_path)
-            logging.info(f"모델 로컬 저장 완료: {model_full_path}")
-
-            return model, run_id
+            return
 
         except Exception as e:
             logging.error(f"모델 학습 중 오류 발생: {e}", exc_info=True)
@@ -99,10 +103,6 @@ if __name__ == "__main__":
 
         mlflow_tracking_uri = get_config_value(config_path, 'mlflow.tracking_uri')
         mlflow_experiment_name = get_config_value(config_path, 'mlflow.experiment_name')
-        model_registry_name = get_config_value(config_path, 'mlflow.model_registry_name')
-
-        model_output_dir = os.path.join(project_root, get_config_value(config_path, 'model.output_dir'))
-        model_filename = get_config_value(config_path, 'model.filename')
 
         # ✅ 명령줄 인자 반영
         current_xgb_params = base_xgb_params.copy()
@@ -113,26 +113,22 @@ if __name__ == "__main__":
             current_xgb_params['eta'] = args.eta
             logging.info(f"eta 인자 오버라이드: {args.eta}")
 
+        # ✅ feature_names 불러오기
+        feature_names = load_feature_names(
+            os.path.join(project_root, processed_data_dir, feature_names_file)
+        )
+
         # ✅ 학습 실행
-        trained_model, run_id = train_model(
+        train_model(
             train_filepath=os.path.join(project_root, processed_data_dir, train_data_file),
             target_column=target_column,
-            feature_names=load_feature_names(os.path.join(project_root, processed_data_dir, feature_names_file)),
+            feature_names=feature_names,
             xgb_params=current_xgb_params,
             mlflow_tracking_uri=mlflow_tracking_uri,
             mlflow_experiment_name=mlflow_experiment_name,
-            model_registry_name=model_registry_name,
-            model_output_dir=model_output_dir,
-            model_filename=model_filename
         )
 
-        logging.info(f"✅ 모델 학습 완료. MLflow Run ID: {run_id}")
-
-        # ✅ Run ID 임시 저장
-        temp_run_id_path = os.path.join(project_root, '.temp_mlflow_run_id.txt')
-        with open(temp_run_id_path, 'w') as f:
-            f.write(run_id)
-        logging.info(f"임시 Run ID 저장됨: {temp_run_id_path}")
+        logging.info("✅ 모델 학습 완료. MLflow에 결과가 기록되었습니다.")
 
     except Exception as e:
         logging.error(f"스크립트 실행 중 오류 발생: {e}", exc_info=True)
