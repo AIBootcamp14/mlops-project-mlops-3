@@ -1,0 +1,371 @@
+{
+  "movies": [
+    {
+      "adult": false,
+      "backdrop_path": "/1RgPyOhN4DRs225BGTlHJqCudII.jpg",
+      "genre_ids": [
+        16,
+        28,
+        14,
+        53
+      ],
+      "id": 1311031,
+      "original_language": "ja",
+      "original_title": "劇場版「鬼滅の刃」無限城編 第一章 猗窩座再来",
+      "overview": "혈귀로 변해버린 여동생 네즈코를 인간으로 되돌리기 위해 혈귀를 사냥하는 조직인 《귀살대》에 입대한 카마도 탄지로. 입대 후 동료인 아가츠마 젠이츠, 하시비라 이노스케와 함께 많은 혈귀와 싸우고, 성장하면서 세 사람의 우정과 유대는 깊어진다. 탄지로는 《귀살대》 최고위 검사인 《주》와도 함께 싸웠다. 「무한열차」에서는 염주・렌고쿠 쿄쥬로, 「유곽」에서는 음주・우즈이 텐겐, 「도공 마을」에서는 하주・토키토 무이치로, 연주・칸로지 미츠리와 함께 혈귀를 상대로 격렬한 전투를 벌였다. 그 후 다가올 혈귀와의 결전에 대비해 귀살대원들과 함께 《주》가 주도하는 합동 강화 훈련에 참가해 훈련을 받던 도중 《귀살대》의 본부인 우부야시키 저택에 나타난 키부츠지 무잔. 어르신의 위기에 달려온 《주》들과 탄지로였지만, 무잔의 술수로 의문의 공간으로 떨어지고 말았는데. 탄지로 일행이 떨어진 곳, 그곳은 혈귀의 본거지 《무한성》─ “귀살대”와 “혈귀”의 최종 결전의 포문이 열린다.",
+      "popularity": 408.9754,
+      "poster_path": "/bAZfECLMVqbeuLV0Wxwpa0oOSFD.jpg",
+      "release_date": "2025-08-22",
+      "title": "극장판 귀멸의 칼날: 무한성편",
+      "video": false,
+      "vote_average": 6.9,
+      "vote_count": 61
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/u2ctOiURF9hL3hmXmEMHxcVPVrQ.jpg",
+      "genre_ids": [
+        27
+      ],
+      "id": 1242011,
+      "original_language": "en",
+      "original_title": "Together",
+      "overview": "관계의 한계에 부딪힌 오래된 커플 팀과 밀리. 어느 날 서로의 몸이 점점 붙어버리기 시작하는데…",
+      "popularity": 101.7074,
+      "poster_path": "/paEzrPZCgNvUw6DwYlm6HQPXohc.jpg",
+      "release_date": "2025-09-03",
+      "title": "투게더",
+      "video": false,
+      "vote_average": 7.775,
+      "vote_count": 69
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/dcLV5rEXuQRW0ZlB7IMLArHMyWh.jpg",
+      "genre_ids": [
+        14,
+        35,
+        10751
+      ],
+      "id": 1125257,
+      "original_language": "en",
+      "original_title": "Freakier Friday",
+      "overview": "엄마 테스와 딸 애나가 서로 몸이 바뀌는 대환장 바디 체인지를 겪은 지도 어느덧 22년이 흐른 지금. 성공한 심리학자로서 첫 책 출간을 앞두고 책 사인회를 준비 중인 테스. 팝스타 매니저이자 싱글맘인 애나는 스타 셰프 에릭과 결혼을 앞두고 있지만, 애나의 딸 하퍼와 에릭의 딸 릴리는 이들의 결혼을 극구 반대한다. 한편, 진정한 하나의 가족이 되기 위해 한 지붕 아래 낯선 동거가 시작되고, 크고 작은 갈등이 이어지는 와중 설상가상 네 명의 몸이 모두 뒤바뀌며 혼란스러운 시간을 보내게 되는데… 과연 이들은 이번에도 무사히 돌아올 수 있을까?",
+      "popularity": 35.7299,
+      "poster_path": "/cMOP2GgqyEzSmSgHcPBSJmMmNw.jpg",
+      "release_date": "2025-08-27",
+      "title": "프리키 프라이데이 2",
+      "video": false,
+      "vote_average": 8.1,
+      "vote_count": 10
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/eQV9rSQ6S1ja4lGTwHTnQuVhoG.jpg",
+      "genre_ids": [
+        27,
+        35,
+        14,
+        18
+      ],
+      "id": 1284120,
+      "original_language": "no",
+      "original_title": "Den stygge stesøsteren",
+      "overview": "아름다움이 곧 권력이 되는 잔혹한 경쟁의 왕국. 언제나 외모로 조롱받던 ‘엘비라’는 ‘왕자’와의 달콤한 사랑을 꿈꾼다.  그러던 어느 날, 그녀에게 찾아온 단 한 번의 기회— 의붓언니인 ‘아그네스’와 함께 왕자가 개최하는 무도회에 초대된다. 그녀는 왕자의 마음을 사로잡기 위해 아름다움에 집착하며, 그 어떤 고통도 마다하지 않는다.  아름다움을 향한 그 갈망의 끝에 끔찍한 대가가 따른다는 사실을 모른 채…",
+      "popularity": 31.5225,
+      "poster_path": "/sgstfJwOCiCEMusDGatnm1qegSW.jpg",
+      "release_date": "2025-08-20",
+      "title": "어글리 시스터",
+      "video": false,
+      "vote_average": 7.254,
+      "vote_count": 291
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/3ExQ28MVRaBbJFI2br5NjLyXVO1.jpg",
+      "genre_ids": [
+        28,
+        35,
+        53
+      ],
+      "id": 1212855,
+      "original_language": "en",
+      "original_title": "Fight or Flight",
+      "overview": "“하늘 위에서 벌어지는 살벌한 생존 게임”  전직 요원 루카스 레예스(조쉬 하트넷)는 과거의 잘못으로 방콕에 숨어 지내던 중, 그림자처럼 존재하는 해커 ‘고스트’를 생포하라는 제안을 받는다. 그의 임무 장소는 다름 아닌 방콕에서 샌프란시스코로 향하는 비행기. 그러나 기대와 달리 비행기실은 각국의 용병들로 가득 차 있고, 그들 모두 고스트를 제거하려 든다. 운명처럼 마주친 승무원 이샤(차리트라 찬드란)가 사실 ‘고스트’임이 드러나고, 루카스는 그녀를 지키기 위해 목숨을 건 사투를 벌인다. 한 치 앞도 예측할 수 없는 기내, 각양각색의 킬러들이 끈질기게 추격해오고, 그 속에서 두 사람은 서로의 진심을 조금씩 이해하게 된다. 제한된 공간에서 터져 나오는 과격한 액션과 특유의 블랙코미디적 감각이 시선을 사로잡는다. 칼과 총, 체급을 뛰어넘는 근접 전투까지, 마치 《버릿 트레인》을 공중으로 옮겨 놓은 듯한 스펙터클이 펼쳐진다 . 조쉬 하트넷은 넉살 좋지만 묵직한 매력의 전사로 완벽 변신, 그의 열연이 영화 전체의 재미를 이끈다. 비행기는 점점 위험에 빠지지만, 루카스와 이샤는 서로의 힘이 되어 살아남기 위한 마지막 결전을 향해 나아간다. 산산이 부서진 기체, 치명적인 위협 속에서 그들이 맞이할 결말은 과연 무엇일까…하늘 위에서 벌어질 최후의 대결이 펼쳐진다는데…",
+      "popularity": 11.8444,
+      "poster_path": "/n7zV7DmQP333aGoT4vtTZEDw60E.jpg",
+      "release_date": "2025-09-03",
+      "title": "킬러들의 비행",
+      "video": false,
+      "vote_average": 6.1,
+      "vote_count": 175
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/x0pkoGlwWdkzRxgQioD3cUG0awu.jpg",
+      "genre_ids": [
+        18,
+        36
+      ],
+      "id": 1000837,
+      "original_language": "pt",
+      "original_title": "Ainda Estou Aqui",
+      "overview": "바닷가 근처에 예쁜 집. 웃고 노래하는 사랑스러운 한 가족. 어느 날 찾아온 남자들은 아버지를 끌고 갔다. 아내는 물었다. \"그는 어디에, 그는 왜\" 사람은 말했다. \"그는 없다. 그를 모른다.\" 그렇게 시작된 20년의 돌림 노래. 아들은 글을 썼고 친구는 카메라를 들었으며 당신은 극장에 앉아 있다. 그날의 영원한 증인이 되기 위해.",
+      "popularity": 5.0939,
+      "poster_path": "/dq0Qdjfom6mG10B1cfQsIxYDMqe.jpg",
+      "release_date": "2025-08-20",
+      "title": "아임 스틸 히어",
+      "video": false,
+      "vote_average": 7.969,
+      "vote_count": 749
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/twkiKpUoaLl05HFdvoIhNxmkluV.jpg",
+      "genre_ids": [
+        10749
+      ],
+      "id": 928333,
+      "original_language": "zh",
+      "original_title": "念念相忘",
+      "overview": "순진한 얼굴 뒤에 제멋대로 꼼수왕 ‘양쓰훠’와 청순한 외모 뒤에 공부와 운동까지 갓벽한 찐 사기캐 ‘쉬녠녠’.  사소한 장난에서 시작된 세 판의 내기. 불타는 승부욕으로 티격태격 경쟁하던 두 사람은 어느새 서로의 세계에 스며들기 시작한다.  첫사랑은 이루어지지 않는다는 속설에 도전하는 두 사람. 과연 이들은 어떤 엔딩을 맞이할까?",
+      "popularity": 4.4838,
+      "poster_path": "/WanYWjH8hr9yHzNQoHa5bPghAj.jpg",
+      "release_date": "2025-08-27",
+      "title": "첫사랑 엔딩",
+      "video": false,
+      "vote_average": 6.2,
+      "vote_count": 8
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/xE0ZIQ0uUwyVBugVCobrhU5hyme.jpg",
+      "genre_ids": [
+        18,
+        35
+      ],
+      "id": 1013154,
+      "original_language": "en",
+      "original_title": "Hard Truths",
+      "overview": "때와 장소를 가리지 않고 누구에게나 할 말 다 하는 '팬지'. 집, 길거리, 마트... 그녀가 가는 곳에는 언제나 트러블이 생긴다. 그런 그녀를 유일하게 보듬는 사람은 여동생 '샨텔'뿐, 남편과 아들은 귀를 닫은 듯 그저 무심할 뿐이다. '어머니의 날'을 맞아 '팬지'와 '샨텔'의 가족이 모두 모인 자리, '팬지'가 무슨 말을 할지 조마조마하던 가족은 그녀의 뜻밖의 반응에 당황하는데...",
+      "popularity": 3.4397,
+      "poster_path": "/bE6tjXiuKJkBTOAldHQrgcpf8UY.jpg",
+      "release_date": "2025-08-20",
+      "title": "내 말 좀 들어줘",
+      "video": false,
+      "vote_average": 6.6,
+      "vote_count": 90
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/4BC3dC3Bz8241rSuYHoccEsoM0h.jpg",
+      "genre_ids": [
+        878,
+        35,
+        18
+      ],
+      "id": 929831,
+      "original_language": "fr",
+      "original_title": "L'Empire",
+      "overview": "프랑스 북부 해안의 평온한 마을에, 외계에서 온 존재들이 은밀히 착륙한다. 이들은 지구에서 태어난 '메시아' 아기를 둘러싸고 서로 다른 목표를 가진 채 충돌하며, 인간 세계 속에 숨어든다. 서로의 이해관계들이 교차하는 가운데, 신성한 탄생은 전 우주적 전쟁의 중심이 되는데...",
+      "popularity": 1.4239,
+      "poster_path": "/pVPgtNTrKFCDOcMNhmzzMwIlky8.jpg",
+      "release_date": "2025-08-20",
+      "title": "엠파이어",
+      "video": false,
+      "vote_average": 4.7,
+      "vote_count": 80
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/1aL5xmJJKxur5GJ1glJSOLK3xnG.jpg",
+      "genre_ids": [
+        18,
+        36
+      ],
+      "id": 972433,
+      "original_language": "en",
+      "original_title": "Race to Glory: Audi vs Lancia",
+      "overview": "전 세계가 랠리에 미쳐 있던 1980년대. ‘란치아’가 지배하던 랠리 월드 챔피언십에 독일 신생팀 ‘아우디’가 막강한 사륜구동 ‘아우디 콰트로’로 신흥 강자로 떠오르게 된다. 이후 ‘아우디’에 지속적인 패배를 당하며 해체 위기에 몰리자 ‘란치아’의 디렉터 ‘체사레 피오리오’는 그에 대항할 후륜구동 ‘란치아 랠리 037’을 선보인다. 최고의 드라이버 ‘발터 뢰를’마저 불가능이라고 생각하지만, ‘체사레 피오리오’는 그를 설득해 ‘란치아 랠리 037’로 마지막 자존심을 건 레이스에 도전하는데…. 불가능에 가까운 승리를 향해 달리는 아우디 vs 란치아의 역사를 바꾼 전설적인 대결!",
+      "popularity": 1.5389,
+      "poster_path": "/ovoybG8mCn6nQ6i5WoC8DdR08c2.jpg",
+      "release_date": "2025-08-21",
+      "title": "아우디 vs 란치아",
+      "video": false,
+      "vote_average": 6.1,
+      "vote_count": 211
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/4stepMoz737edm7Tb5Y9C5o8cJs.jpg",
+      "genre_ids": [
+        35,
+        18,
+        10402
+      ],
+      "id": 31512,
+      "original_language": "ja",
+      "original_title": "嫌われ松子の一生",
+      "overview": "도쿄에서 백수 생활을 하던 쇼는 고향의 아버지로부터 한 통의 전화를 받는다. 행방불명 되었던 고모 마츠코가 사체로 발견되었으니 유품을 정리하라는 것. 다 허물어져가는 아파트에서 이웃들에게 혐오스런 마츠코라고 불리며 살던 그녀의 물건을 정리하며 쇼는 한 번도 만난 적 없는 마츠코의 일생을 접하게 된다. 중학교 교사로 일하며 모든 이에게 사랑받던 마츠코에게 지난 25년간 도대체 어떤 일이 일어난 것일까?  제자가 일으킨 절도사건으로 해고 당한 마츠코는 가출을 감행한다. 하지만 동거하던 작가 지망생은 자살해 버리고, 그의 친구와 불륜을 시작한 마츠코는 곧 버림받고 절망에 빠져 몸을 팔게 된다. 기둥서방에게마저 배신당한 마츠코는 그를 살해, 8년형을 언도 받는다. 출소 후, 미용사로 일하던 마츠코는 자신을 해고당하게 만들었던 절도사건의 범인인 제자 류 요이치와 재회하고 운명적인 사랑에 빠지게 되는데....",
+      "popularity": 1.424,
+      "poster_path": "/9iCNFMHfVC25iM2hrmh1f5MCF0y.jpg",
+      "release_date": "2007-04-12",
+      "title": "혐오스런 마츠코의 일생",
+      "video": false,
+      "vote_average": 7.772,
+      "vote_count": 171
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/mCl0SILqkRCsBAxegP6pZDhE5mL.jpg",
+      "genre_ids": [
+        18
+      ],
+      "id": 1306061,
+      "original_language": "ja",
+      "original_title": "グランメゾン・パリ",
+      "overview": "파인다이닝의 심장, 프랑스 파리. 그곳에서 다시, 꿈을 플레이팅하다! ‘그랑 메종 도쿄’로 아시아 최초 미슐랭 3스타를 달성한 천재 셰프 오바나. 이번엔 미식의 본고장 파리에서, 새로운 전설에 도전한다. 세계의 거장들이 모인 무대, 그곳에서 최초의 아시아 셰프 3스타를 노린다. 주방의 불꽃보다 뜨거운 열정, 차별을 뚫고, 국경을 넘어 모든 것을 건 궁극의 미식 코스를 준비한다.",
+      "popularity": 1.4006,
+      "poster_path": "/72gloWDSJFqQ0QcM2jdQi2y1zhm.jpg",
+      "release_date": "2025-08-27",
+      "title": "그랑 메종 파리",
+      "video": false,
+      "vote_average": 8.5,
+      "vote_count": 2
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/kdDQn3Oi7iy1VK7GWhMRyPXUf9K.jpg",
+      "genre_ids": [
+        99,
+        10402
+      ],
+      "id": 24128,
+      "original_language": "en",
+      "original_title": "Stop Making Sense",
+      "overview": "1983년 할리우드 판타지스 극장, 그날의 무대는 전설이 되었다. “안녕하세요, 테이프 하나 틀게요.” 뉴욕 언더그라운드 클럽에서 출발해 시대의 아이콘이 된 뉴웨이브 밴드 '토킹 헤즈'. 프론트맨 '데이비드 번’이 한 대의 어쿠스틱 기타를 들고 무대에 오른다. 곡이 더해질수록 멤버들이 차례로 등장하며, 무대는 에너지로 폭발하고 퍼포먼스는 예술로 완성된다. 인터뷰도, 설명도 없다. 오직 음악과 무대만으로 88분의 클라이맥스를 선사하는 역대 최고의 콘서트 영화.",
+      "popularity": 1.2629,
+      "poster_path": "/vAZxtf6eCE7LERr9aRSvoeJ2V4z.jpg",
+      "release_date": "2025-08-13",
+      "title": "스탑 메이킹 센스",
+      "video": false,
+      "vote_average": 8.3,
+      "vote_count": 316
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/4OqoSolfhNesDAfv2zluIDVXiPR.jpg",
+      "genre_ids": [
+        18
+      ],
+      "id": 47796,
+      "original_language": "it",
+      "original_title": "Mamma Roma",
+      "overview": "맘마 로마(안나 만냐니 분)는 포주인 카르미네(프랑코 시티 분) 밑에서 일하던 매춘부다. 카르미네가 결혼하여 시골로 내려가면서 잠시 자유를 찾은 맘마로마는 새로운 삶을 살기로 계획하고, 시장에서 과일과 야채 가게를 시작한다. 그리고, 그녀는 시골집에 맡겼던 16살 된 아들 에토레(에토레 가로폴로 분)를 데려와 함께 살게 된다. 최하층의 삶을 살고 있는 엄마는 아들만은 소시민의 환경에서 살게 되기를 바랬지만 카르미네는 다시 일하러 나오던지, 아니면 완전한 자유를 위해서는 200,000 리라의 몸값을 내라고 한다.",
+      "popularity": 0.9595,
+      "poster_path": "/vmxNMNdTUQ6tMAJZzkNHLxt1h0I.jpg",
+      "release_date": "2025-08-20",
+      "title": "맘마 로마",
+      "video": false,
+      "vote_average": 7.9,
+      "vote_count": 415
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/p50tpjWClQ2TdubXeYgaB0YTFEf.jpg",
+      "genre_ids": [
+        18
+      ],
+      "id": 1273936,
+      "original_language": "ja",
+      "original_title": "新米記者トロッ子 私がやらねば誰がやる！",
+      "overview": "동경하던 작가 코노하가 재학 중인 명문고에 입학한 문학 오타쿠 토코로. 문예부 입부 시험을 치르던 중, 예기치 못한 사고가 발생한다. 실망도 잠시, 문예부 부장 사이온지로부터 놀라운 제안을 받게 되는데, 바로 신비주의 작가 코노하의 정체를 밝히면 문예부 입부를 도와주겠다는 것. 토코로는 유일하게 코노하에 대한 단서가 있는 신문부로 잠입하고, 신입 기자로의 이중생활을 시작한다. 과연, 그녀는 코노하의 정체를 밝히고 문예부에 입부할 수 있을까?",
+      "popularity": 1.1087,
+      "poster_path": "/8HegNe5gxfcZM6HFsOpvT7SGnWY.jpg",
+      "release_date": "2025-09-03",
+      "title": "신입기자 토롯코",
+      "video": false,
+      "vote_average": 6.5,
+      "vote_count": 3
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/xnnBBwUq2FL2NhF6WTa27AetMqt.jpg",
+      "genre_ids": [
+        10749,
+        35,
+        18
+      ],
+      "id": 1168294,
+      "original_language": "en",
+      "original_title": "Young Werther",
+      "overview": "자유롭고 낭만적을 좇는 베르테르는 운명처럼 사랑에 빠진다. 하지만 그녀는 이미 약혼자가 있는 사람. 친구의 만류에도 불구하고 그는 그녀의 마음을 얻기 위해 엉뚱하고 무모한 계획을 시작한다. 현실과 사랑 사이, 웃음과 눈물이 공존하는 그의 좌충우돌 러브 레이스! 누구보다 뜨겁게, 누구보다 진심으로 사랑을 꿈꾼 베르테르의 유쾌한 로맨스가 펼쳐진다.",
+      "popularity": 0.6124,
+      "poster_path": "/mIv7evmgfXWvQ4IxY8BPEX0j5iI.jpg",
+      "release_date": "2025-08-14",
+      "title": "젊은 베르테르의 사랑",
+      "video": false,
+      "vote_average": 7.0,
+      "vote_count": 2
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/nnDVfcM9J6FNBerIm0rjUsljwCx.jpg",
+      "genre_ids": [
+        16,
+        10751,
+        14
+      ],
+      "id": 1134680,
+      "original_language": "cs",
+      "original_title": "Pyšná princezna",
+      "overview": "부드러운 목소리를 지녔고 다정한 배려가 몸에 밴 ‘벤자민’ 왕은 가장 아름다운 ‘캐롤리나’ 공주를 처음 본 순간 한눈에 반한다. 하지만 건방지고 까칠한 ‘캐롤리나’ 공주는 사절단을 통해 보낸 그의 청혼을 가볍게 무시한다. 포기를 모르는 ‘벤자민’ 왕은 정원사로 신분을 숨기고 ‘캐롤리나’ 공주에게 다가가 그녀의 마음을 조금씩 사로잡기 시작한다. 한편 ‘캐롤리나’ 공주의 결혼을 이용해 한몫 단단히 챙기려던 ‘막시무스’ 삼총사는 ‘벤자민’이 방해가 되자, 그를 없애고 둘을 떼어놓을 음모를 꾸미는데…",
+      "popularity": 0.4944,
+      "poster_path": "/g1Zp41nUOR23Je5XO9gNaemsIDt.jpg",
+      "release_date": "2025-08-15",
+      "title": "프라우드 프린세스: 로열 어드벤처",
+      "video": false,
+      "vote_average": 6.6,
+      "vote_count": 5
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/6b0ryx2Okijr9d2pusAkccR1EOk.jpg",
+      "genre_ids": [
+        99
+      ],
+      "id": 1095494,
+      "original_language": "en",
+      "original_title": "Geoff McFetridge: Drawing a Life",
+      "overview": "“그의 디자인은 어디에나 존재한다” 사람들로 붐비는 지하철역부터 애플, 나이키, 에르메스 등 글로벌 브랜드와의 협업과 영화 <그녀>, <존 말코비치 되기>까지··· 평범한 하루 속에서 즐거움을 발견하고 일상의 유쾌함을 디자인하는 그래픽 아티스트 제프 맥페트리지. 그가 달리고, 그리고, 생각하는 모든 순간을 담다.",
+      "popularity": 0.1595,
+      "poster_path": "/rK3vCLNZFmxjPMY8QYXbeUtS1zn.jpg",
+      "release_date": "2025-08-13",
+      "title": "제프 맥페트리지: 드로잉 라이프",
+      "video": false,
+      "vote_average": 4.5,
+      "vote_count": 2
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/y46l34DHFL0fjlGnisvaZbofaF8.jpg",
+      "genre_ids": [
+        18
+      ],
+      "id": 1200753,
+      "original_language": "es",
+      "original_title": "Tú me abrasas",
+      "overview": "고대 그리스의 시인 사포와 님프 브리토마르티스가 바다에서 사랑과 죽음에 관한 대화를 나눈다. 사포는 실연의 고통 끝에 바다로 몸을 던졌고, 브리토마르티스는 자신을 쫓아오는 남자에게서 도망치다 절벽에서 떨어져 바다에 빠졌다. 그들은 자신들을 둘러싼 이야기와 이미지들을 생각하며, 욕망의 달콤씁쓸한 본질을 잠시나마 이해하고자 한다. 체사레 파베세의 저작 ‘레우코와의 대화’ 중 ‘바다 거품'을 여러 각주와 함께 각색한 작품.",
+      "popularity": 0.2569,
+      "poster_path": "/nTH5wTTdovRCNARBUlljqGWP78z.jpg",
+      "release_date": "2025-08-27",
+      "title": "너는 나를 불태워",
+      "video": false,
+      "vote_average": 10.0,
+      "vote_count": 1
+    }
+  ],
+  "count": 19,
+  "crawled_date": "2025-08-06 19:10:19",
+  "data_type": "test_upcoming_rated"
+}

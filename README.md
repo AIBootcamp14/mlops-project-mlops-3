@@ -1,118 +1,165 @@
-# **프로젝트 제목**  
-프로젝트의 간단한 소개와 목적을 작성합니다.  
-- **프로젝트 기간:** YYYY.MM.DD ~ YYYY.MM.DD  
-- **배포 링크:** [서비스 바로가기](링크 입력) *(필요 시 추가)*  
+# 🎬 영화 평점 예측 서비스
+
+> **목표:** 영화 평점 예측 서비스를 자동화하는 **MLOps 파이프라인 구현**  
+> **배경:** MLOps 전 과정을 직접 구현하여 실무 역량 강화  
+
+- **프로젝트 기간:** 2025.07.28 ~ 2025.08.08  
+- **배포 링크:** [Streamlit 대시보드 바로가기](http://54.180.90.11:8501)
 
 ---
 
-## **1. 서비스 구성 요소**  
-### **1.1 주요 기능**  
-- 기능 1: *(주요 기능 간단 설명)*  
-- 기능 2: *(주요 기능 간단 설명)*  
-- 기능 3: *(주요 기능 간단 설명)*  
+## 🔧 서비스 구성
 
-### **1.2 사용자 흐름**  
-- 사용자 시나리오 예시:  
-  1. *(유저 행동 1 설명)*  
-  2. *(유저 행동 2 설명)*  
+### ✅ 주요 기능
 
----
+- TMDB API 기반 영화 메타데이터 수집
+- 수집 데이터 전처리 및 Feature Engineering
+- XGBoost 기반 회귀 모델 학습 및 예측
+- FastAPI를 활용한 REST API 제공
+- Streamlit을 통한 예측 결과 시각화
+- Airflow 기반 파이프라인 자동화
+- MLflow를 통한 실험 및 모델 버전 관리
 
-## **2. 활용 장비 및 협업 툴**  
+### ✅ 사용자 흐름
 
-### **2.1 활용 장비**  
-- **서버 장비:** *(예: AWS EC2 t2.medium)*  
-- **개발 환경:** *(예: Ubuntu 20.04, Windows 11)*  
-- **테스트 장비:** *(예: MacBook Pro, GPU RTX 3090)*  
-
-### **2.2 협업 툴**  
-- **소스 관리:** GitHub  
-- **프로젝트 관리:** Jira, Notion  
-- **커뮤니케이션:** Slack  
-- **버전 관리:** Git  
+1. 사용자가 영화 제목 또는 ID 입력  
+2. FastAPI를 통해 요청 전달  
+3. MLflow 모델 호출 및 예측  
+4. Streamlit을 통해 결과 시각화  
 
 ---
 
-## **3. 최종 선정 AI 모델 구조**  
-- **모델 이름:** *(예: BERT, GPT-4, YOLOv8)*  
-- **구조 및 설명:** *(모델의 세부 구조 및 특징 설명)*  
-- **학습 데이터:** *(데이터 출처 및 전처리 방법 설명)*  
-- **평가 지표:** *(정확도, F1-Score, RMSE 등 평가 기준 설명)*  
+## 🧠 AI 모델 정보
+
+- **모델 이름:** XGBoost (eXtreme Gradient Boosting)
+- **선정 이유:**
+  - 회귀 문제에 적합한 고성능 예측
+  - 빠른 학습 및 과적합 방지 기법 지원
+  - 향후 특성 중요도 해석 가능
+
+- **입력 데이터:**  
+  - TMDB API로 수집한 영화 메타데이터 (감독, 배우, 장르, 개봉일 등)
+
+- **성능 지표:**  
+  - RMSE, MAE, R² (MLflow UI로 확인)
 
 ---
 
-## **4. 서비스 아키텍처**  
-### **4.1 시스템 구조도**  
-서비스 아키텍처 다이어그램을 첨부합니다. *(예: 이미지, 다이어그램)*  
+## 🛠 아키텍처 및 파이프라인
 
-![서비스 아키텍처 예시](링크 입력)  
+### ✅ 시스템 구조도
+<img src="https://github.com/user-attachments/assets/49132d70-e853-49f6-b598-ec42f2c69726" width="100%"/>
 
-### **4.2 데이터 흐름도**  
-- 데이터 처리 및 서비스 간 연결 흐름 설명  
-- 예시:  
-  1. 사용자 입력 → AI 분석 → 결과 반환  
-  2. 데이터 저장 → 전처리 → 모델 적용  
+### ✅ MLOps 워크플로우 (Airflow DAG)
 
----
-
-## **5. 사용 기술 스택**  
-### **5.1 백엔드**  
-- Flask / FastAPI / Django *(필요한 항목 작성)*  
-- 데이터베이스: SQLite / PostgreSQL / MySQL  
-
-### **5.2 프론트엔드**  
-- React.js / Next.js / Vue.js *(필요한 항목 작성)*  
-
-### **5.3 머신러닝 및 데이터 분석**  
-- TensorFlow / PyTorch  
-- scikit-learn / Pandas / NumPy  
-
-### **5.4 배포 및 운영**  
-- AWS EC2 / S3 / Lambda  
-- Docker / Kubernetes / GitHub Actions  
+- `run_crawler` → 영화 데이터 수집  
+- `run_preprocessing` → 전처리 수행  
+- `run_train` → 모델 학습  
+- `run_evaluate` → 성능 평가  
+- `run_register_mlflow` → MLflow 모델 등록  
+- `run_main` → 전체 파이프라인 실행  
 
 ---
 
-## **6. 팀원 소개**  
+## 📁 폴더 구조
 
-| 이름      | 역할              | GitHub                               | 담당 기능                                 |
-|----------|------------------|-------------------------------------|-----------------------------------------|
-| **홍길동** | 팀장/백엔드 개발자 | [GitHub 링크](링크 입력)             | 서버 구축, API 개발, 배포 관리            |
-| **김철수** | 프론트엔드 개발자  | [GitHub 링크](링크 입력)             | UI/UX 디자인, 프론트엔드 개발             |
-| **이영희** | AI 모델 개발자    | [GitHub 링크](링크 입력)             | AI 모델 선정 및 학습, 데이터 분석         |
-| **박수진** | 데이터 엔지니어    | [GitHub 링크](링크 입력)             | 데이터 수집, 전처리, 성능 평가 및 테스트   |
+```
+movie-mlops-project/
+├── .github/workflows/          # GitHub Actions CI/CD
+├── config/                     # 설정 파일 (config.yml 등)
+├── dags/                       # Airflow DAG 정의
+├── docker/                     # Docker 관련 파일
+├── ingestion/                  # TMDB API 데이터 수집
+├── model/                      # 모델 학습 및 평가
+├── model_artifacts/            # 저장된 모델 파일
+├── preprocessing/              # 전처리 및 Feature Engineering
+├── requirements/               # 의존성 설정
+├── scripts/                    # 실행 스크립트
+├── serving/                    # FastAPI 서버 구성
+├── tests/                      # 유닛 테스트
+├── .env.template               # 환경변수 예시
+├── docker-compose.yml          # Docker 통합 실행 파일
+├── pyproject.toml              # 프로젝트 메타 정보
+└── requirements.txt            # 패키지 목록
+```
 
 ---
 
-## **7. Appendix**  
-### **7.1 참고 자료**  
-- 논문 및 문서: *(참고 논문 또는 기술 문서 링크 추가)*  
-- 데이터 출처: *(데이터셋 링크 또는 설명)*  
-- 코드 참고 자료: *(레퍼런스 코드 또는 문서 링크)*  
+## 🚀 기술 스택
 
-### **7.2 설치 및 실행 방법**  
-1. **필수 라이브러리 설치:**  
-    ```bash
-    pip install -r requirements.txt
-    ```
+### ✅ 백엔드
+- **FastAPI** – API 서버  
+- **MLflow** – 모델 추적 및 배포  
+- **Amazon S3** – 모델 및 데이터 저장  
 
-2. **서버 실행:**  
-    ```bash
-    python app.py
-    ```
+### ✅ 프론트엔드
+- **Streamlit** – 대시보드 UI  
 
-3. **웹페이지 접속:**  
-    ```
-    http://localhost:5000
-    ```
+### ✅ 머신러닝
+- **XGBoost**, **scikit-learn**, **pandas**, **NumPy**  
 
-### **7.3 주요 커밋 기록 및 업데이트 내역**  
+### ✅ DevOps & MLOps
+- **Docker**, **Airflow**, **AWS EC2**, **GitHub Actions**
 
-| 날짜         | 업데이트 내용                              | 담당자      |
-|-------------|------------------------------------------|------------|
-| YYYY.MM.DD  | 초기 프로젝트 세팅 및 환경 설정 추가          | 홍길동      |
-| YYYY.MM.DD  | AI 모델 최적화 및 성능 개선                   | 이영희      |
-| YYYY.MM.DD  | UI 디자인 및 페이지 구조 업데이트              | 김철수      |
-| YYYY.MM.DD  | 데이터 전처리 및 분석 코드 추가                | 박수진      |
-| YYYY.MM.DD  | 배포 환경 설정 및 Docker 이미지 구성           | 홍길동      |
+---
 
+## 👥 팀원 소개
+
+| <img src="https://avatars.githubusercontent.com/u/213385368?v=4" width="120" style="border-radius:50%;"> | <img src="https://avatars.githubusercontent.com/u/66048976?v=4" width="120" style="border-radius:50%;"> | <img src="https://avatars.githubusercontent.com/u/162023876?v=4" width="120" style="border-radius:50%;"> | <img src="https://avatars.githubusercontent.com/u/213417897?v=4" width="120" style="border-radius:50%;"> | <img src="https://avatars.githubusercontent.com/u/213385147?v=4" width="120" style="border-radius:50%;"> |
+|:---:|:---:|:---:|:---:|:---:|
+| [문채린](https://github.com/CHAERINMOON) | [박재홍](https://github.com/woghd8503) | [김상윤](https://github.com/94KSY) | [김동준](https://github.com/rafiki3816) | [정서우](https://github.com/Seowoo-C) |
+| 팀장, 자동화 파이프라인 구축 | 아키텍처 설계 및 환경 세팅 | 웹서비스 구현 | 데이터 수집 및 전처리 | 모델 학습 및 MLflow |
+
+> **협업 철학:**  
+> "배워서 남주자" / "모든 질문은 가치가 있다" / "모든 새로운 시도는 가치가 있다"  
+> 매일 오전 10시 미팅, 오후 2시 집중 회의 진행
+
+---
+
+## 💬 팀원 회고 요약
+
+| 이름 | 역할 | 회고 요약 |
+|------|------|-----------|
+| **문채린** | 자동화 파이프라인 구축 | 처음 맡은 자동화 파트에 대한 도전과 성공 경험. 팀원의 도움에 감사. |
+| **박재홍** | 아키텍처 및 환경 구성 | 공동 성장 중심으로 협업하며 많은 것을 시도. 다음 프로젝트엔 더 주도적으로 참여 예정. |
+| **김상윤** | 웹서비스 구축 | 예상보다 많은 연결 문제가 있었지만 큰 배움과 책임감을 얻은 경험. |
+| **김동준** | 데이터 전처리 | 협업 과정의 어려움을 극복하며 모두와 함께 성장한 값진 경험. |
+| **정서우** | 모델링, MLflow | 낯선 도구 속에서도 팀원 도움으로 흐름을 익히고 MLOps 이해도 향상. |
+
+---
+
+## 🧪 실행 방법
+
+1. **라이브러리 설치**
+```bash
+pip install -r requirements.txt
+```
+
+2. **FastAPI 서버 실행**
+```bash
+python app.py
+```
+
+3. **접속 주소**
+```
+http://localhost:5000
+```
+
+---
+
+## 🔗 주요 실행 주소
+
+| 서비스 항목 | 접속 주소 |
+|-------------|-----------|
+| 🌐 MLflow UI | http://54.180.90.11:5001 |
+| 📡 FastAPI Docs | http://54.180.90.11:8000/docs |
+| 📊 Streamlit Dashboard | http://54.180.90.11:8501 |
+
+---
+
+## 📚 참고 자료
+
+- [TMDB API 공식 문서](https://developer.themoviedb.org/docs)
+- [XGBoost 공식 문서](https://xgboost.readthedocs.io)
+- [MLflow 문서](https://mlflow.org/docs/latest/index.html)
+- [Streamlit 문서](https://docs.streamlit.io/)

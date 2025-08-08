@@ -1,0 +1,14 @@
+FROM apache/airflow:2.9.0-python3.11
+
+USER root
+
+# Install any additional packages & Python libraries required by the DAGs
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy DAGs into Airflow DAG directory
+COPY movie-mlops-project/dags/ /opt/airflow/dags
+
+USER airflow
+COPY requirements/base.txt requirements/airflow.txt /tmp/req/
+RUN pip install --no-cache-dir -r /tmp/req/airflow.txt 

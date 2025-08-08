@@ -1,0 +1,2 @@
+-r base.txt
+pandas==2.2.2 

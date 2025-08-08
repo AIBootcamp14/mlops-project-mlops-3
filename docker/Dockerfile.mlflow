@@ -1,0 +1,10 @@
+FROM python:3.11-slim
+
+WORKDIR /mlflow
+
+COPY requirements/base.txt requirements/mlflow.txt ./
+RUN pip install --no-cache-dir -r mlflow.txt
+
+EXPOSE 5000
+
+CMD ["mlflow", "server", "--host", "0.0.0.0", "--port", "5000", "--backend-store-uri", "sqlite:///mlflow.db", "--default-artifact-root", "s3://YOUR_BUCKET/mlflow/"] 

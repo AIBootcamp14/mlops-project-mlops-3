@@ -1,0 +1,10 @@
+-r base.txt
+fastapi==0.111.0
+uvicorn[standard]==0.30.1
+pydantic==2.7.1
+xgboost==2.0.3
+
+# Streamlit 프론트엔드
+streamlit>=1.28.0
+plotly>=5.15.0
+requests>=2.31.0
