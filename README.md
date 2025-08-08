@@ -4,149 +4,162 @@
 > **배경:** MLOps 전 과정을 직접 구현하여 실무 역량 강화  
 
 - **프로젝트 기간:** 2025.07.28 ~ 2025.08.08  
-- **배포 링크:** [서비스 바로가기](http://54.180.90.11:8501)
+- **배포 링크:** [Streamlit 대시보드 바로가기](http://54.180.90.11:8501)
 
 ---
 
-## 📦 서비스 구성 요소
+## 🔧 서비스 구성
 
-### 1. 주요 기능
+### ✅ 주요 기능
 
-- TMDB API를 이용한 영화 메타데이터 수집
-- 수집 데이터 전처리 및 피처 엔지니어링
+- TMDB API 기반 영화 메타데이터 수집
+- 수집 데이터 전처리 및 Feature Engineering
 - XGBoost 기반 회귀 모델 학습 및 예측
-- FastAPI를 이용한 API 제공 및 Streamlit 시각화
-- Airflow를 이용한 파이프라인 자동화
+- FastAPI를 활용한 REST API 제공
+- Streamlit을 통한 예측 결과 시각화
+- Airflow 기반 파이프라인 자동화
 - MLflow를 통한 실험 및 모델 버전 관리
 
-### 2. 사용자 흐름
+### ✅ 사용자 흐름
 
 1. 사용자가 영화 제목 또는 ID 입력  
-2. FastAPI를 통해 입력 전달  
-3. MLflow에서 서빙 중인 모델 호출  
-4. 예측 결과 반환 및 Streamlit에서 시각화  
+2. FastAPI를 통해 요청 전달  
+3. MLflow 모델 호출 및 예측  
+4. Streamlit을 통해 결과 시각화  
 
 ---
 
-## ⚙ 활용 장비 및 협업 툴
-
-### 서버 및 개발 장비
-
-- **서버:** AWS EC2 t2.medium  
-- **개발환경:** Ubuntu 20.04 (WSL2)  
-- **테스트:** 개인 PC  
-
-### 협업 툴
-
-- **소스 관리:** GitHub (Issue & PR 중심)  
-- **프로젝트 관리:** Notion  
-- **커뮤니케이션:** Slack, KakaoTalk  
-
----
-
-## 🧠 AI 모델 개요
+## 🧠 AI 모델 정보
 
 - **모델 이름:** XGBoost (eXtreme Gradient Boosting)
-- **선정 이유:**  
-  - 수치 예측(회귀)에 최적화  
-  - 빠른 학습 속도 및 과적합 방지 기법(L1/L2, Shrinkage 등)  
-  - 향후 특성 중요도 해석 가능성  
+- **선정 이유:**
+  - 회귀 문제에 적합한 고성능 예측
+  - 빠른 학습 및 과적합 방지 기법 지원
+  - 향후 특성 중요도 해석 가능
 
-- **학습 데이터:**  
-  - TMDB API 기반 영화 메타데이터  
-  - 감독, 배우, 장르, 출시일 등 주요 특성 포함
+- **입력 데이터:**  
+  - TMDB API로 수집한 영화 메타데이터 (감독, 배우, 장르, 개봉일 등)
 
-- **모델 성능 평가 지표:**  
-  - RMSE, MAE, R² (MLflow UI에서 확인 가능)
+- **성능 지표:**  
+  - RMSE, MAE, R² (MLflow UI로 확인)
 
 ---
 
-## 🛠 아키텍처 및 워크플로우
+## 🛠 아키텍처 및 파이프라인
 
-### 시스템 구조도
+### ✅ 시스템 구조도
 <img src="https://github.com/user-attachments/assets/49132d70-e853-49f6-b598-ec42f2c69726" width="100%"/>
 
-### MLOps 워크플로우 (Airflow DAG)
+### ✅ MLOps 워크플로우 (Airflow DAG)
 
-- `run_crawler` → 영화 메타데이터 수집  
-- `run_preprocessing` → 데이터 정제 및 저장  
+- `run_crawler` → 영화 데이터 수집  
+- `run_preprocessing` → 전처리 수행  
 - `run_train` → 모델 학습  
-- `run_evaluate` → 평가 지표 산출  
-- `run_register_mlflow` → 모델 MLflow 등록  
-- `run_main` → 전체 파이프라인 통합  
+- `run_evaluate` → 성능 평가  
+- `run_register_mlflow` → MLflow 모델 등록  
+- `run_main` → 전체 파이프라인 실행  
+
+---
+
+## 📁 폴더 구조
+
+```
+movie-mlops-project/
+├── .github/workflows/          # GitHub Actions CI/CD
+├── config/                     # 설정 파일 (config.yml 등)
+├── dags/                       # Airflow DAG 정의
+├── docker/                     # Docker 관련 파일
+├── ingestion/                  # TMDB API 데이터 수집
+├── model/                      # 모델 학습 및 평가
+├── model_artifacts/            # 저장된 모델 파일
+├── preprocessing/              # 전처리 및 Feature Engineering
+├── requirements/               # 의존성 설정
+├── scripts/                    # 실행 스크립트
+├── serving/                    # FastAPI 서버 구성
+├── tests/                      # 유닛 테스트
+├── .env.template               # 환경변수 예시
+├── docker-compose.yml          # Docker 통합 실행 파일
+├── pyproject.toml              # 프로젝트 메타 정보
+└── requirements.txt            # 패키지 목록
+```
 
 ---
 
 ## 🚀 기술 스택
 
-### 백엔드
-- **FastAPI** (API 서버)
-- **MLflow** (모델 추적 및 배포)
-- **Amazon S3** (모델 아티팩트 및 전처리 데이터 저장)
+### ✅ 백엔드
+- **FastAPI** – API 서버  
+- **MLflow** – 모델 추적 및 배포  
+- **Amazon S3** – 모델 및 데이터 저장  
 
-### 프론트엔드
-- Streamlit (사용자 대시보드)
+### ✅ 프론트엔드
+- **Streamlit** – 대시보드 UI  
 
-### 머신러닝
-- XGBoost, scikit-learn, pandas, NumPy
+### ✅ 머신러닝
+- **XGBoost**, **scikit-learn**, **pandas**, **NumPy**  
 
-### DevOps & 배포
-- Docker, Airflow, AWS EC2
+### ✅ DevOps & MLOps
+- **Docker**, **Airflow**, **AWS EC2**, **GitHub Actions**
 
 ---
 
-## **6. 팀원 소개**  
+## 👥 팀원 소개
 
+| <img src="https://avatars.githubusercontent.com/u/213385368?v=4" width="120" style="border-radius:50%;"> | <img src="https://avatars.githubusercontent.com/u/66048976?v=4" width="120" style="border-radius:50%;"> | <img src="https://avatars.githubusercontent.com/u/162023876?v=4" width="120" style="border-radius:50%;"> | <img src="https://avatars.githubusercontent.com/u/213417897?v=4" width="120" style="border-radius:50%;"> | <img src="https://avatars.githubusercontent.com/u/213385147?v=4" width="120" style="border-radius:50%;"> |
+|:---:|:---:|:---:|:---:|:---:|
+| [문채린](https://github.com/CHAERINMOON) | [박재홍](https://github.com/woghd8503) | [김상윤](https://github.com/94KSY) | [김동준](https://github.com/rafiki3816) | [정서우](https://github.com/Seowoo-C) |
+| 팀장, 자동화 파이프라인 구축 | 아키텍처 설계 및 환경 세팅 | 웹서비스 구현 | 데이터 수집 및 전처리 | 모델 학습 및 MLflow |
 
-| <img src="https://avatars.githubusercontent.com/u/213385368?v=4" width="150" style="border-radius:50%;"> | <img src="https://avatars.githubusercontent.com/u/66048976?v=4" width="150" style="border-radius:50%;">  | <img src="https://avatars.githubusercontent.com/u/162023876?v=4" width="150" style="border-radius:50%;"> | <img src="https://avatars.githubusercontent.com/u/213417897?v=4" width="150" style="border-radius:50%;"> | <img src="https://avatars.githubusercontent.com/u/213385147?v=4" width="150" style="border-radius:50%;"> |
-| :--------------------------------------------------------------: | :--------------------------------------------------------------: | :--------------------------------------------------------------: | :--------------------------------------------------------------: | :--------------------------------------------------------------: |
-|            [문채린](https://github.com/CHAERINMOON)             |            [박재홍](https://github.com/woghd8503)             |            [김상윤](https://github.com/94KSY)             |            [김동준](https://github.com/rafiki3816)             |            [정서우](https://github.com/Seowoo-C)             |
-|                            팀장, 자동화 파이프라인 구축                             |                            개발 환경 세팅, 아키텍처 설계                             |                            웹서비스 구현                             |                            데이터 크롤링 전처리                            |                            모델 학습, MLflow                             |
 > **협업 철학:**  
-> “배워서 남주자”, “모든 질문은 가치가 있다”, “모든 새로운 시도는 가치가 있다”  
-> 매일 오전 10시 미팅, 오후 2시 집중 회의 진행.
+> "배워서 남주자" / "모든 질문은 가치가 있다" / "모든 새로운 시도는 가치가 있다"  
+> 매일 오전 10시 미팅, 오후 2시 집중 회의 진행
 
 ---
 
-# 📝 팀원 회고 요약
+## 💬 팀원 회고 요약
 
-|   이름           | 역할                         | 회고 요약 |
-|------------------|------------------------------|-----------|
-|  **문채린**          | 자동화 파이프라인 구축       | 자동화 파트를 처음 맡아 걱정이 있었지만 파이프라인 구축 방법을 익히며 실무 역량 향상. 팀원들의 도움에 감사. |
-|  **박재홍**          | 아키텍처 설계, 개발환경 세팅 | 공동 성장을 목표로 다양한 시도를 하며 많은 것을 배움. 다음에는 더 주도적으로 참여하고자 다짐. |
-|  **김상윤**           | 웹서비스 구현                | 다른 파트와의 연결에서 어려움을 겪었지만 많은 배움을 얻음. 과정의 중요성을 깨달음. |
-|  **김동준**           | 데이터 크롤링, 전처리        | 단계별 협업이 어려웠지만 문제를 공유하며 협업 능력 향상. 모두의 고생에 감사함. |
-|  **정서우**           | 모델 학습, MLflow            | 처음 접하는 도구들이 어려웠지만, 팀원 도움으로 무사히 역할 수행. 흐름을 이해할 수 있었던 소중한 경험. |
+| 이름 | 역할 | 회고 요약 |
+|------|------|-----------|
+| **문채린** | 자동화 파이프라인 구축 | 처음 맡은 자동화 파트에 대한 도전과 성공 경험. 팀원의 도움에 감사. |
+| **박재홍** | 아키텍처 및 환경 구성 | 공동 성장 중심으로 협업하며 많은 것을 시도. 다음 프로젝트엔 더 주도적으로 참여 예정. |
+| **김상윤** | 웹서비스 구축 | 예상보다 많은 연결 문제가 있었지만 큰 배움과 책임감을 얻은 경험. |
+| **김동준** | 데이터 전처리 | 협업 과정의 어려움을 극복하며 모두와 함께 성장한 값진 경험. |
+| **정서우** | 모델링, MLflow | 낯선 도구 속에서도 팀원 도움으로 흐름을 익히고 MLOps 이해도 향상. |
 
+---
 
-## **7. Appendix**  
-### **7.1 참고 자료**  
-- TMDB API 공식 문서: https://developer.themoviedb.org/docs
-- XGBoost 공식 문서: https://xgboost.readthedocs.io
-- MLflow 사용 가이드: https://mlflow.org/docs/latest/index.html
-- Streamlit 문서: https://docs.streamlit.io/
+## 🧪 실행 방법
 
-### **7.2 설치 및 실행 방법**  
-1. **필수 라이브러리 설치:**  
-    ```bash
-    pip install -r requirements.txt
-    ```
+1. **라이브러리 설치**
+```bash
+pip install -r requirements.txt
+```
 
-2. **서버 실행:**  
-    ```bash
-    python app.py
-    ```
+2. **FastAPI 서버 실행**
+```bash
+python app.py
+```
 
-3. **웹페이지 접속:**  
-    ```
-    http://localhost:5000
-    ```
+3. **접속 주소**
+```
+http://localhost:5000
+```
 
-### **7.4 주요 실행 주소**  
-| 서비스 | 주소 |
-|--------|------|
-| :globe_with_meridians: MLflow UI | [http://54.180.90.11:5001](http://54.180.90.11:5001) |
-| :satellite_antenna: FastAPI Docs | [http://54.180.90.11:8000/docs](http://54.180.90.11:8000/docs) |
-| :bar_chart: Streamlit Dashboard | [http://54.180.90.11:8501](http://54.180.90.11:8501) |
+---
 
+## 🔗 주요 실행 주소
 
+| 서비스 항목 | 접속 주소 |
+|-------------|-----------|
+| 🌐 MLflow UI | http://54.180.90.11:5001 |
+| 📡 FastAPI Docs | http://54.180.90.11:8000/docs |
+| 📊 Streamlit Dashboard | http://54.180.90.11:8501 |
+
+---
+
+## 📚 참고 자료
+
+- [TMDB API 공식 문서](https://developer.themoviedb.org/docs)
+- [XGBoost 공식 문서](https://xgboost.readthedocs.io)
+- [MLflow 문서](https://mlflow.org/docs/latest/index.html)
+- [Streamlit 문서](https://docs.streamlit.io/)
